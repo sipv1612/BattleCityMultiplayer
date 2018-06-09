@@ -1,23 +1,20 @@
-#ifndef __BULLET_H__
-#define	__BULLET_H__
+#pragma once
+#ifndef BULLET
+#define BULLET
+#include "BaseObject.h"
 
-
-#include "ObjectBase.h"
-
-USING_NS_CC;
-
-class Bullet : public ObjectBase
+class Bullet : public BaseObject
 {
 private:
-	BULLET_STATE bulletState;
-	cocos2d::Sprite  *mBullet;
-	bool isReset = false;
+	int OwnerID;
 public:
-	Bullet(std::vector<TANK_STATE*> *_allTank, std::vector<BULLET_STATE*> *_allBullet, std::vector<BRICK*> *_allBrick) : ObjectBase(_allTank, _allBullet, _allBrick) {};
-	void Init(Owned type, float x, float y, eMove emove);
-	void Reset();
-	virtual void update(float dt) override;
+	static Bullet* create();
+	bool init();
 
+	void Spawn(int _ownerID, Team _team, float _x, float _y, eMove _dir = NONE);
+	int getOwnerID();
+	void Update(float dt);
+	void UpdateMove(float dt);
+	bool IsOutOfScreen();
 };
-
-#endif
+#endif // !BULLET

@@ -30,6 +30,7 @@ bool BaseObject::init()
 	speedMove = 0;
 	ID = 0;
 	isDie = false;
+	this->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
 
 	return true;
 
@@ -93,7 +94,7 @@ void BaseObject::SetID(int id)
 
 void BaseObject::Update(float deltaTime)
 {
-	this->setPosition(box->x, box->y);
+
 }
 
 void BaseObject::Spawn(Team _team, float _x, float _y, eMove _dir)
