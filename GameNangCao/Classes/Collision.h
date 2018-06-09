@@ -1,6 +1,5 @@
 #pragma once
-
-#include "Define.h"
+#include "Box.h"
 #include <Windows.h>
 #include <limits>
 

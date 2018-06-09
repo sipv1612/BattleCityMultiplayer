@@ -12,8 +12,8 @@ using namespace std;
 
 #define DEFAULT_COUNT       2
 #define DEFAULT_PORT        5150
-#define DEFAULT_BUFFER      500000
-#define BUFFER_SIZE			2048000
+#define DEFAULT_BUFFER      5000
+#define BUFFER_SIZE			20480
 #define SIZE_OF_SERVER		4336
 
 class Client
@@ -36,6 +36,7 @@ private:
 	char Buffer[BUFFER_SIZE];
 	int LPTail = 0;
 	int LPHead = 0;
+	int dataSize = 0;
 public:
 	Client();
 	~Client();
@@ -43,6 +44,8 @@ public:
 	bool connectClient();
 	bool sendData();
 	bool recvData();
+	bool recvTeam();
+
 	bool closeClient();
 	bool cleanUpClient();
 	void Reset();

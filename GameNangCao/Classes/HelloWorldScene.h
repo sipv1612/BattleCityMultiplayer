@@ -3,7 +3,6 @@
 
 #include "cocos2d.h"
 #include "GameStart.h"
-#include "Box2D\Box2D.h"
 
 class HelloWorld : public cocos2d::Layer
 {
