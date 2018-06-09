@@ -21,7 +21,24 @@ bool Tank::init(Team _team, bool _isRobot)
 	if (!BaseObject::init())
 		return false;
 
-	this->setObjectSprite(Sprite::create(SPRITE_TANK_BLUE));
+	char* str = new char[20];
+	switch (_team)
+	{
+	case TeamGreen:
+		sprintf(str, SPRITE_TANK_GREEN_CHILD, 0);
+		this->setObjectSprite(Sprite::createWithSpriteFrameName(str));
+		this->m_sprite->runAction(RepeatForever::create(getTankMoveAnimate(TeamGreen)));
+		break;
+	case TeamBlue:
+		sprintf(str, SPRITE_TANK_BLUE_CHILD, 0);
+		this->setObjectSprite(Sprite::createWithSpriteFrameName(str));
+		this->m_sprite->runAction(RepeatForever::create(getTankMoveAnimate(TeamBlue)));
+		break;
+	case None:
+		break;
+	default:
+		break;
+	}
 	this->SetBoxSize(TANK_BOX_SIZE, TANK_BOX_SIZE);
 	return true;
 }

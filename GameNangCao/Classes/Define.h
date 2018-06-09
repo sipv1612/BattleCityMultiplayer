@@ -26,17 +26,11 @@ USING_NS_CC;
 #define MAP_BIRTH_TEAM_1 6
 #define MAP_BIRTH_TEAM_2 2
 
-enum ObjectType
-{
-	TypeBrick,
-	TypeConcrete,
-	TypeTank,
-	TypeBullet,
-	TypeCommandBase,
-	TypeGun,
-	TypeItem,
-	None
-};
+#define DEFAULT_COUNT       2
+#define DEFAULT_PORT        5150
+#define DEFAULT_BUFFER      5000
+#define BUFFER_SIZE			20480
+#define DATA_BUFFER			8192
 
 enum ObjectType
 {
@@ -46,7 +40,7 @@ enum ObjectType
 	TypeBullet,
 	TypeCommandBase,
 	TypeItem,
-	None
+	TypeNone
 };
 
 enum TerrainType
@@ -78,7 +72,8 @@ enum KEY
 	TankRevial,
 	BulletSpawn,
 	BulletDie,
-	TerrainDie
+	TerrainDie,
+	Nothing
 };
 
 struct PACKET_KEY
@@ -111,10 +106,14 @@ struct TANK_MOVE
 struct TANK_DIE
 {
 	int idTank;
+	float posX;
+	float posY;
 	TANK_DIE() {}
-	TANK_DIE(int id)
+	TANK_DIE(int id, float x, float y)
 	{
 		idTank = id;
+		posX = x;
+		posY = y;
 	}
 };
 struct TANK_REVIVAL
@@ -150,10 +149,14 @@ struct BULLET_SPAWN
 struct BULLET_DIE
 {
 	int idBullet;
+	float posX;
+	float posY;
 	BULLET_DIE() {}
-	BULLET_DIE(int id)
+	BULLET_DIE(int id, float x, float y)
 	{
 		idBullet = id;
+		posX = x;
+		posY = y;
 	}
 };
 
@@ -167,6 +170,40 @@ struct TERRAIN_DIE
 	}
 };
 
+enum KeySend
+{
+	Move,
+	Shoot
+};
+struct SEND_KEY
+{
+	KeySend key;
+	SEND_KEY(KeySend _key)
+	{
+		key = _key;
+	}
+};
+struct SEND_MOVE_DATA
+{
+	int iD;
+	eMove dir;
+	SEND_MOVE_DATA(int _iD, eMove _dir)
+	{
+		iD = _iD;
+		dir = _dir;
+	}
+};
+struct SEND_SHOOT_DATA
+{
+	int iD;
+	eMove dirShot;
+	SEND_SHOOT_DATA(int _iD, eMove _dir)
+	{
+		iD = _iD;
+		dirShot = _dir;
+	}
+};
+ 
 #pragma region Assets
 static const cocos2d::Size SIZE_BRICK = cocos2d::Size(32, 32);
 static const cocos2d::Size SIZE_CONCRETE = cocos2d::Size(32, 32);
@@ -178,7 +215,7 @@ static const float MAX_HEALTH_BRICK = 3;
 static const char* SPRITE_BRICK = "Brick.png";
 static const char* SPRITE_CONCRETE = "Concrete.png";
 static const char* SPRITE_COMMAND_BASE = "CommandBase.png";
-static const char* SPRITE_BULLET = "Bullet.png";
+static const char* SPRITE_BULLET = "EnemyBullet.png";
 static const char* SPRITE_TANK_RED = "RedTank.png";
 static const char* SPRITE_TANK_BLUE = "BlueTeam.png";
 static const char* SPRITE_TANK_GREEN = "GreenTeam.png";

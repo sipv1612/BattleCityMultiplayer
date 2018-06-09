@@ -4,12 +4,9 @@
 #include <fstream>
 
 USING_NS_CC;
-bool RecvedData;
-extern int YourPos;
-extern Client * client;
 Scene* GameStart::createScene()
 {
-    
+	loadCaches();
 	// 'scene' is an autorelease object
 	auto scene = Scene::create();
 	//scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
@@ -27,7 +24,8 @@ Scene* GameStart::createScene()
 bool GameStart::init()
 {
    
-	
+	charactor->Spawn(TeamBlue, 100, 100);
+	addChild(charactor);
 	
 
 #pragma endregion
@@ -54,7 +52,7 @@ void GameStart::menuCloseCallback(Ref* pSender)
 }
 void GameStart::update(float delta)
 {
-	
+	charactor->Update(delta);
 }
 void GameStart::Recv()
 {
@@ -62,33 +60,6 @@ void GameStart::Recv()
 }
 void GameStart::run(float delta)
 {
-	
-	client->PacketSend(character->player);
-	client->sendData();
-	if (character->player.Shooting)
-	{
-		//CCLOG("Shoot %f\n", deltasend);
-		character->player.Shooting = false;
-	}
-
-	if (client->recvData())
-		RecvedData = true;
-
-	else
-		RecvedData = false;
-
-	int teamWin = client->Extras(_world);
-	/*if (teamWin != 0)
-	{
-		CCLOG("%d", teamWin);
-		unscheduleUpdate();
-		unscheduleAllSelectors();
-		client->closeClient();
-		client->cleanUpClient();
-		auto endScene = EndScene::createScene(teamWin);
-		Director::getInstance()->replaceScene(endScene);
-
-	}*/
 	update(delta);
 }
 

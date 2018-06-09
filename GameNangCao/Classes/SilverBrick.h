@@ -3,7 +3,6 @@
 
 
 #include "cocos2d.h"
-#include "ObjectBase.h"
 
 USING_NS_CC;
 

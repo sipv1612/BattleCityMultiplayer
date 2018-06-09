@@ -7,14 +7,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "cocos2d.h"
-#include "Packet.h"
+#include "Define.h"
 using namespace std;
-
-#define DEFAULT_COUNT       2
-#define DEFAULT_PORT        5150
-#define DEFAULT_BUFFER      5000
-#define BUFFER_SIZE			20480
-#define SIZE_OF_SERVER		4336
 
 class Client
 {
@@ -44,14 +38,12 @@ public:
 	bool connectClient();
 	bool sendData();
 	bool recvData();
-	bool recvTeam();
 
 	bool closeClient();
 	bool cleanUpClient();
 	void Reset();
 	int getTeam();
-	void PacketSend(TANK_STATE player);
-	int Extras(UPDATE_WORLD world);
+	int Extras();
 
 };
 #endif // !_CLIENT_H_

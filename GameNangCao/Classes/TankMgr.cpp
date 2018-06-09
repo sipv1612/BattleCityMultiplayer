@@ -59,6 +59,31 @@ void TankMgr::Spawn(Team team, float x, float y, eMove dir, bool isCharactor)
 
 }
 
+void TankMgr::HandleMovePackage(TANK_MOVE package)
+{
+	auto tank = listTank.at(package.idTank);
+	tank->Move(package.dir);
+	tank->SetPos(package.posX, package.posY);
+}
+
+void TankMgr::HandleDiePackage(TANK_DIE package)
+{
+	auto tank = listTank.at(package.idTank);
+	tank->Die();
+	tank->SetPos(package.posX, package.posY);
+}
+
+void TankMgr::HandleRevivalPackage(TANK_REVIVAL package)
+{
+	auto tank = listTank.at(package.idTank);
+	tank->Revival();
+}
+
+cocos2d::Vector<Tank*> TankMgr::GetTanks()
+{
+	return listTank;
+}
+
 TankMgr::~TankMgr()
 {
 }

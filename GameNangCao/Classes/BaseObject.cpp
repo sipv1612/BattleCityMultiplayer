@@ -32,6 +32,7 @@ bool BaseObject::init()
 	isDie = false;
 	this->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
 
+
 	return true;
 
 }
@@ -48,10 +49,10 @@ void BaseObject::Move(eMove dir)
 	switch (moveDir)
 	{
 	case eMove::UP:
-		SetVel(0, -speedMove);
+		SetVel(0, speedMove);
 		break;
 	case eMove::DOWN:
-		SetVel(0, speedMove);
+		SetVel(0, -speedMove);
 		break;
 	case eMove::LEFT:
 		SetVel(-speedMove, 0);

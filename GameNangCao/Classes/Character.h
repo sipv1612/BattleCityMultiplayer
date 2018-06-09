@@ -8,7 +8,7 @@ class Character : public Tank
 	bool isKeyDown = false;
 	float timeShoot = 0;
 	eMove dirShoot = NONE;
-	std::string perfix;
+	
 public:
 
 	static Character * create(Team _team = Team::TeamBlue, bool isRobot = false);
@@ -17,6 +17,8 @@ public:
 	void UpdateShoot(float deltaTime);
 	bool IsCanShoot();
 	bool InitMouseKeyBoard();
+	void SendDataMove();
+	void SendDataShoot();
 	void onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
 	void onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
 	

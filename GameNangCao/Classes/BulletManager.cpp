@@ -68,6 +68,19 @@ void BulletManager::Spawn(int _ownerID, Team team, float x, float y, int bulletI
 		listBullet.at(bulletIndex)->Spawn(_ownerID, team, x, y, dir);
 }
 
+void BulletManager::HandleShotPackage(BULLET_SPAWN package)
+{
+	auto bullet = listBullet.at(package.idBullet);
+	bullet->Spawn(0, package.team, package.posX, package.posY, package.dir);
+}
+
+void BulletManager::HandleDiePackage(BULLET_DIE package)
+{
+	auto bullet = listBullet.at(package.idBullet);
+	bullet->Die();
+	bullet->SetPos(package.posX, package.posY);
+}
+
 cocos2d::Vector<Bullet*> BulletManager::GetBullets()
 {
 	return listBullet;

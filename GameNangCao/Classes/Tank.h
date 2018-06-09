@@ -7,7 +7,7 @@ using namespace std;
 
 class Tank : public BaseObject
 {
-private:
+protected:
 	bool isRobot = false;
 public:
 	static Tank * create(Team _team = Team::TeamBlue, bool isRobot = false);

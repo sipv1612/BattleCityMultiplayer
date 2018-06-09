@@ -14,6 +14,10 @@ public:
 	bool init();
 	void Update(float deltaTime);
 	void Spawn(Team team, float x, float y, eMove dir = NONE, bool isCharactor = false);
+	void HandleMovePackage(TANK_MOVE package);
+	void HandleDiePackage(TANK_DIE package);
+	void HandleRevivalPackage(TANK_REVIVAL package);
+	cocos2d::Vector<Tank*> GetTanks();
 	~TankMgr();
 	
 };

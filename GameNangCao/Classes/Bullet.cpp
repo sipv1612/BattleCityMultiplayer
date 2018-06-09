@@ -29,7 +29,7 @@ bool Bullet::init()
 	return true;
 }
 
-void Bullet::Spawn(int _ownerID, Team _team, float _x, float _y, eMove _dir = NONE)
+void Bullet::Spawn(int _ownerID, Team _team, float _x, float _y, eMove _dir)
 {
 	this->setObjectSprite(Sprite::create(SPRITE_BULLET));
 	OwnerID = _ownerID;

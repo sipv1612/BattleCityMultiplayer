@@ -3,18 +3,10 @@
 
 #include "cocos2d.h"
 #include "Character.h"
-#include "SilverBrick.h"
-#include "Collision.h"
 class GameStart : public cocos2d::Layer
 {
 private:
-	Character *character;
-	SilverBrick *silverB[150];
-	Box* broadPhaseBoxA;
-	Box* broadPhaseBoxB;
-	int red, silver, robot;
-	UPDATE_WORLD _world;
-	float deltasend;
+	Character * charactor = Character::create();
 	
 public:
     static cocos2d::Scene* createScene();
