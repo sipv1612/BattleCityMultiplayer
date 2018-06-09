@@ -42,43 +42,7 @@ void FreeSocketInformation(DWORD Index, int* numOfPlayer)
 
 	(*numOfPlayer)--;
 }
-void Packing(UPDATE_WORLD world, LPSOCKET_INFORMATION socket)
-{
 
-	/*if (!(world.allBrick.empty() && world.allBullet.empty() && world.allTank.empty()))
-	{
-		char *buffer;
-		int _size;
-		int sizePlayer;
-		int sizeBrick;
-		int sizeBullet;
-		sizePlayer = world.allTank.size();
-		sizeBrick = world.allBrick.size();
-		sizeBullet = world.allBullet.size();
-		_size = sizePlayer * sizeof TANK_STATE + world.allBrick.size() * sizeof BRICK_WORLD + sizeBullet * sizeof BULLET_STATE + 4 * sizeof(int);
-		buffer = new char[_size];
-		memcpy(buffer, &_world.teamWin, sizeof(int));
-		memcpy(buffer + sizeof(int), &sizePlayer, sizeof(int));
-		memcpy(buffer + 2 * sizeof(int), &sizeBrick, sizeof(int));
-		memcpy(buffer + 3 * sizeof(int), &sizeBullet, sizeof(int));
-		for (int i = 0; i < sizePlayer; i++)
-		{
-			memcpy(buffer + 4 * sizeof(int) + i * sizeof TANK_STATE, world.allTank[i], sizeof TANK_STATE);
-		}
-		for (int i = 0; i < sizeBrick; i++)
-		{
-			memcpy(buffer + 4 * sizeof(int) + sizePlayer * sizeof TANK_STATE + i * sizeof BRICK_WORLD, world.allBrick[i], sizeof(BRICK_WORLD));
-		}
-		for (int i = 0; i < sizeBullet; i++)
-		{
-			memcpy(buffer + 4 * sizeof(int) + sizePlayer * sizeof TANK_STATE + sizeBrick * sizeof BRICK_WORLD + i * sizeof BULLET_STATE, world.allBullet[i], sizeof(BULLET_STATE));
-		}
-		socket->dataBufSend.buf = new char[_size];
-		socket->dataBufSend.buf = buffer;
-		socket->dataBufSend.len = _size;
-	}*/
-
-}
 
 void SendData()
 {
@@ -238,7 +202,8 @@ void  NetworkProc(void* Data)
 			}
 
 			//Receive and send data
-
+			int ret = 0;
+			char* datarev = new char[DATA_BUFSIZE];
 			for (i = 0; Total > 0 && i < numOfPlayer; i++)
 			{
 				// If the ReadSet is marked for this socket then this means data
@@ -258,18 +223,17 @@ void  NetworkProc(void* Data)
 					}
 					else
 					{
-
-						{
-							EnterCriticalSection(&criticalDataRecv);
-							dataRecv[i]->Add(socketArray[i]->dataBuf.buf, socketArray[i]->bytesRECV);
-							LeaveCriticalSection(&criticalDataRecv);
-						}
-
+						memcpy(datarev + ret, socketArray[i]->dataBuf.buf, socketArray[i]->bytesRECV);
+						ret += socketArray[i]->bytesRECV;
 					}
 				}
-
-
 			}
+			EnterCriticalSection(&criticalDataRecv);
+			dataRecv->Add(datarev, ret);
+			dataRecv->SetRet(ret);
+			delete datarev;
+			LeaveCriticalSection(&criticalDataRecv);
+
 		}
 	}
 }

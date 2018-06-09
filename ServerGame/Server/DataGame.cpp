@@ -7,6 +7,7 @@ DataGame::DataGame()
 	data = new char[CMD_BUFSIZE];
 	LPTail = 0;
 	LPHead = 0;
+	ret = 0;
 }
 
 
@@ -35,12 +36,22 @@ void DataGame::UpdateLPHead(int value)
 	LPHead += value;
 }
 
-int DataGame::GetLPTail()
+void DataGame::SetRet(int _ret)
 {
-	return LPTail;
+	ret = _ret;
 }
 
-int DataGame::GetLPHead()
+int DataGame::GetRet()
 {
-	return LPHead;
+	return ret;
+}
+
+int* DataGame::GetLPTail()
+{
+	return &LPTail;
+}
+
+int* DataGame::GetLPHead()
+{
+	return &LPHead;
 }

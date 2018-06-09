@@ -8,10 +8,6 @@ int main(int argc, char **argv)
 	InitializeCriticalSection(&criticalDataRecv);
 
 	//Empty data
-	for (int i = 0; i < 4; i++)
-	{
-		dataRecv[i] = new DataGame();
-	}
 	networkProc = (HANDLE)_beginthread(&NetworkProc, 0, 0);
 	//dataProc = (HANDLE)_beginthread(&DataProc, 0, 0);
 	gameProc = (HANDLE)_beginthread(&GameProc, 0, 0);

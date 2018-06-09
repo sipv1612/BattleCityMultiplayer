@@ -32,27 +32,43 @@ void TankMgr::Update(float deltaTime)
 
 void TankMgr::Packing()
 {
-	for (int i = 0; i < NUM_OF_PLAYER; i++)
+	int* lpHead = dataRecv->GetLPHead();
+	int* lpTail = dataRecv->GetLPTail();
+	int ret = dataRecv->GetRet();
+	char* data = dataRecv->GetData();
+	if (*(lpHead) + ret > CMD_BUFSIZE)
 	{
-		int lpHead = dataRecv[i]->GetLPHead();
-		int lpTail = dataRecv[i]->GetLPTail();
-		char* data = dataRecv[i]->GetData();
-		
-		if (lpHead + BYTE_OF_CLIENT > CMD_BUFSIZE)
-			lpHead = 0;
-		if (lpHead + BYTE_OF_CLIENT <= lpTail)
+		*(lpHead) = 0;
+	}
+	if (*(lpHead) < *(lpTail))
+	{
+		int dataSize = 0;
+		memcpy(&dataSize, data + *(lpHead), sizeof(int));
+		int packetLimitPerFrame = *(lpHead) + dataSize;
+		*(lpHead) += sizeof(int);
+		while (*(lpHead) < packetLimitPerFrame)
 		{
-			TANK_STATE *temp = new TANK_STATE();
-			memcpy(temp, data + lpHead, sizeof TANK_STATE);
-			if (temp != nullptr)
+			RECV_KEY key;
+			memcpy(&key, data + *(lpHead), sizeof RECV_KEY);
+			*(lpHead) += sizeof RECV_KEY;
+			RECV_MOVE_DATA move;
+			RECV_SHOOT_DATA shot;
+
+			switch (key.key)
 			{
-				listTank[i]->Move(temp->Move);
-				if (temp->Shooting)
-				{
-					listTank[i]->Shoot();
-				}
+			case KeySend::Move:
+				memcpy(&move, data + *(lpHead), sizeof RECV_MOVE_DATA);
+				*(lpHead) += sizeof RECV_MOVE_DATA;
+				listTank[move.iD]->Move(move.dir);
+				break;
+			case KeySend::Shoot:
+				memcpy(&shot, data + *(lpHead), sizeof RECV_SHOOT_DATA);
+				*(lpHead) += sizeof RECV_SHOOT_DATA;
+				listTank[shot.iD]->Shoot(shot.dirShot);
+				break;
+			default:
+				break;
 			}
-			lpHead += BYTE_OF_CLIENT;
 		}
 	}
 }

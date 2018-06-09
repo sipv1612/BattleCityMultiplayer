@@ -6,6 +6,7 @@ bool gameEnded = false;
 int numOfPlayer = 0;
 char * dataSendBuffer = new char[DATA_BUFSIZE];
 int LPDataSendBuffer = sizeof(int);
+
 HANDLE networkProc;
 HANDLE gameProc;
 DWORD Total;

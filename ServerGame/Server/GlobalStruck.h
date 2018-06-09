@@ -127,31 +127,39 @@ struct TERRAIN_DIE
 		idTerrain = id;
 	}
 };
-typedef struct
+enum KeySend
 {
-	int priority;
-}Priority;
-typedef struct
+	Move,
+	Shoot
+};
+struct RECV_KEY
 {
-	bool isVisible;
-	float PosX;
-	float PosY;
-	eMove Move;
-	Team Own;
-}BULLET_STATE;
-
-typedef struct
+	KeySend key;
+	RECV_KEY() {}
+	RECV_KEY(KeySend _key)
+	{
+		key = _key;
+	}
+};
+struct RECV_MOVE_DATA
 {
-	int ID;
-	bool isDie;
-	float PosX;
-	float PosY;
-}BRICK_WORLD;
-typedef struct
+	int iD;
+	eMove dir;
+	RECV_MOVE_DATA(){}
+	RECV_MOVE_DATA(int _iD, eMove _dir)
+	{
+		iD = _iD;
+		dir = _dir;
+	}
+};
+struct RECV_SHOOT_DATA
 {
-	int teamWin;
-	std::vector<BULLET_STATE*> allBullet;
-	std::vector<TANK_STATE*> allTank;
-	std::vector<BRICK_WORLD*> allBrick;
-}UPDATE_WORLD;
-
+	int iD;
+	eMove dirShot;
+	RECV_SHOOT_DATA() {}
+	RECV_SHOOT_DATA(int _iD, eMove _dir)
+	{
+		iD = _iD;
+		dirShot = _dir;
+	}
+};
