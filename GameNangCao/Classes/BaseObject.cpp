@@ -107,6 +107,7 @@ void BaseObject::SetPos(float _x, float _y)
 {
 	box->x = _x;
 	box->y = _y;
+	this->setPosition(_x, _y);
 }
 
 void BaseObject::SetVel(float _x, float _y)
@@ -127,6 +128,11 @@ void BaseObject::AABBHandle(float deltaTime, float collisionTime)
 	box->y += box->vy * collisionTime * deltaTime;
 	box->vx = 0;
 	box->vy = 0;
+}
+
+bool BaseObject::IsOutOfScreen()
+{
+	return (box->x < 0 || box->x + box->width > SCREEN_WIDTH || box->y < 0 || box->y + box->height > SCREEN_HEIGHT);
 }
 
 Box*  BaseObject::GetBox()

@@ -2,27 +2,17 @@
 #define __GAMESTART_SCENE_H__
 
 #include "cocos2d.h"
-#include "ObjectBase.h"
 #include "Character.h"
-#include "Enemy.h"
-#include "RedBrick.h"
 #include "SilverBrick.h"
-#include "Birth.h"
-#include "Tank.h"
 #include "Collision.h"
 class GameStart : public cocos2d::Layer
 {
 private:
 	Character *character;
-	Tank * Player[3];
-	Bullet *bullet[100];
-	RedBrick *redB[300];
 	SilverBrick *silverB[150];
 	Box* broadPhaseBoxA;
 	Box* broadPhaseBoxB;
 	int red, silver, robot;
-	Enemy * enemy[10]; 
-	Birth * birth[2];
 	UPDATE_WORLD _world;
 	float deltasend;
 	

@@ -11,6 +11,20 @@ USING_NS_CC;
 #define SPEED_BULLET 200
 #define SCREEN_HEIGHT 640
 #define SCREEN_WIDTH 640
+#define TANK_BOX_SIZE 28
+#define PLAYER_TIME_SHOT 1
+#define BULLET_BOX_WIDTH 2.8125
+#define BULLET_BOX_HEIGHT 3.75
+
+#define MAP_WIDTH 25
+#define MAP_HEIGHT 23
+#define MAP_TILED_SIZE 32
+#define MAP_TERRAIN_RED 1
+#define MAP_TERRAIN_SLIVER 3
+#define MAP_TANK_TEAM_1 5
+#define MAP_TANK_TEAM_2 4
+#define MAP_BIRTH_TEAM_1 6
+#define MAP_BIRTH_TEAM_2 2
 
 enum ObjectType
 {
