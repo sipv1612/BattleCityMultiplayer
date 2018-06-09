@@ -55,12 +55,14 @@ void TankMgr::Spawn(Team team, float x, float y, eMove dir, bool isCharactor)
 	{
 		auto tank = Character::create(team);
 		tank->SetID(listTank.size());
+		tank->Spawn(team, x, y);
 		this->addChild(tank);
 		listTank.pushBack(tank);
 		return;
 	}
 	auto tank = Tank::create(team);
 	tank->SetID(listTank.size());
+	tank->Spawn(team, x, y);
 	this->addChild(tank);
 	listTank.pushBack(tank);
 
@@ -71,15 +73,9 @@ void TankMgr::InitPlayers()
 	for (int i = 0; i < 4; i++)
 	{
 		Team team = i < 2 ? Team::TeamBlue : Team::TeamGreen;
-		
-		if (i == YourPos)
-		{
-			this->Spawn(team, listPosPlayer.at(i).x, listPosPlayer.at(i).y, eMove::NONE, true);
-		}
-		else
-		{
-			this->Spawn(team, listPosPlayer.at(i).x, listPosPlayer.at(i).y, eMove::NONE, false);
-		}
+		bool isPlayer = i == YourPos ? true : false;
+		this->Spawn(team, listPosPlayer.at(i).x, listPosPlayer.at(i).y, eMove::NONE, isPlayer);
+
 	}
 }
 

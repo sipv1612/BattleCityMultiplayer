@@ -29,7 +29,7 @@ bool TerrainObject::init()
 void TerrainObject::SpawnTerrain(TerrainType _type, float _x, float _y)
 {
 	type = _type;
-
+	SetPos(_x, _y);
 	switch (_type)
 	{
 	case BRICK:
@@ -44,7 +44,6 @@ void TerrainObject::SpawnTerrain(TerrainType _type, float _x, float _y)
 		break;
 	}
 
-	SetPos(_x, _y);
 }
 
 TerrainType TerrainObject::GetType()

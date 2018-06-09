@@ -40,6 +40,7 @@ bool Tank::init(Team _team, bool _isRobot)
 		break;
 	}
 	this->SetBoxSize(TANK_BOX_SIZE, TANK_BOX_SIZE);
+	this->setScale(0.5);
 	return true;
 }
 

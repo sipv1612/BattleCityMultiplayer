@@ -51,6 +51,7 @@ void GameStart::menuCloseCallback(Ref* pSender)
 }
 void GameStart::update(float delta)
 {
+	GameManager::GetInstance()->Update(delta);
 }
 void GameStart::Recv()
 {

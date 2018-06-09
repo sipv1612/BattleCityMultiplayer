@@ -8,6 +8,8 @@ Client* Client::instance = 0;
 
 Client::Client()
 {
+	initClient();
+	connectClient();
 }
 
 Client * Client::GetInstance()

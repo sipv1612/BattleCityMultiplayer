@@ -23,22 +23,23 @@ void GameManager::TankVsTerrain(float deltaTime)
 	auto listTank = TankMgr::GetInstance()->GetTanks();
 	auto listTerrain = TerrainManager::GetInstance()->GetTerrains();
 
-	for (int i = 0; i < listTerrain.size(); i++)
+	for (int i = 0; i < listTank.size(); i++)
 	{
-		for (int j = 0; j < listTank.size(); j++)
+		for (int j = 0; j < listTerrain.size(); j++)
 		{
 			if (listTerrain.at(j)->IsDie() == false)
 			{
-				CollisionClass::GetSweptBroadphaseBox(listTank.at(j)->GetBox(), deltaTime, &broadPhaseBoxA);
+				CollisionClass::GetSweptBroadphaseBox(listTank.at(i)->GetBox(), deltaTime, &broadPhaseBoxA);
 				CollisionClass::GetSweptBroadphaseBox(listTerrain.at(j)->GetBox(), deltaTime, &broadPhaseBoxB);
 
 				if (CollisionClass::AABBCheck(&broadPhaseBoxA, &broadPhaseBoxB))
 				{
-					float collisiontime = CollisionClass::SweptAABB(listTank.at(j)->GetBox(), listTerrain.at(j)->GetBox(), normalx, normaly, deltaTime);
+					float collisiontime = CollisionClass::SweptAABB(listTank.at(i)->GetBox(), listTerrain.at(j)->GetBox(), normalx, normaly, deltaTime);
 					float remainingtime = 1 - collisiontime;
 					if (remainingtime > 0)
 					{
-						listTank.at(j)->Move();
+						listTank.at(i)->Move();
+
 					}
 				}
 			}
@@ -57,16 +58,16 @@ void GameManager::TankVsTank(float deltaTime)
 	{
 		for (int j = i + 1; j < listTank.size(); j++)
 		{
-			CollisionClass::GetSweptBroadphaseBox(listTank.at(j)->GetBox(), deltaTime, &broadPhaseBoxA);
+			CollisionClass::GetSweptBroadphaseBox(listTank.at(i)->GetBox(), deltaTime, &broadPhaseBoxA);
 			CollisionClass::GetSweptBroadphaseBox(listTank.at(j)->GetBox(), deltaTime, &broadPhaseBoxB);
 
 			if (CollisionClass::AABBCheck(&broadPhaseBoxA, &broadPhaseBoxB))
 			{
-				float collisiontime = CollisionClass::SweptAABB(listTank.at(j)->GetBox(), listTank.at(j)->GetBox(), normalx, normaly, deltaTime);
+				float collisiontime = CollisionClass::SweptAABB(listTank.at(i)->GetBox(), listTank.at(j)->GetBox(), normalx, normaly, deltaTime);
 				float remainingtime = 1 - collisiontime;
 				if (remainingtime > 0)
 				{
-					listTank.at(j)->Move();
+					listTank.at(i)->Move();
 					listTank.at(j)->Move();
 				}
 			}
@@ -85,20 +86,20 @@ void GameManager::TankVsBullet(float deltaTime)
 	{
 		for (int j = 0; j < listBullet.size(); j++)
 		{
-			if (listBullet.at(j)->GetTeam() != listTank.at(j)->GetTeam() && !listBullet.at(j)->IsDie())
+			if (listBullet.at(j)->GetTeam() != listTank.at(i)->GetTeam() && !listBullet.at(j)->IsDie())
 			{
 				CollisionClass::GetSweptBroadphaseBox(listBullet.at(j)->GetBox(), deltaTime, &broadPhaseBoxA);
-				CollisionClass::GetSweptBroadphaseBox(listTank.at(j)->GetBox(), deltaTime, &broadPhaseBoxB);
+				CollisionClass::GetSweptBroadphaseBox(listTank.at(i)->GetBox(), deltaTime, &broadPhaseBoxB);
 
 				if (CollisionClass::AABBCheck(&broadPhaseBoxA, &broadPhaseBoxB))
 				{
-					float collisiontime = CollisionClass::SweptAABB(listBullet.at(j)->GetBox(), listTank.at(j)->GetBox(), normalx, normaly, deltaTime);
+					float collisiontime = CollisionClass::SweptAABB(listBullet.at(j)->GetBox(), listTank.at(i)->GetBox(), normalx, normaly, deltaTime);
 					float remainingtime = 1 - collisiontime;
 					if (remainingtime > 0)
 					{
 						listBullet.at(j)->AABBHandle(deltaTime, collisiontime);
 						listBullet.at(j)->Die();
-						listTank.at(j)->Die();
+						listTank.at(i)->Die();
 					}
 				}
 
@@ -118,21 +119,21 @@ void GameManager::BulletVsTerrain(float deltaTime)
 
 		for (int j = 0; j < listBullet.size(); j++)
 		{
-			if (!listBullet.at(j)->IsDie() && !listTerrain.at(j)->IsDie())
+			if (!listBullet.at(j)->IsDie() && !listTerrain.at(i)->IsDie())
 			{
 				CollisionClass::GetSweptBroadphaseBox(listBullet.at(j)->GetBox(), deltaTime, &broadPhaseBoxA);
-				CollisionClass::GetSweptBroadphaseBox(listTerrain.at(j)->GetBox(), deltaTime, &broadPhaseBoxB);
+				CollisionClass::GetSweptBroadphaseBox(listTerrain.at(i)->GetBox(), deltaTime, &broadPhaseBoxB);
 
 				if (CollisionClass::AABBCheck(&broadPhaseBoxA, &broadPhaseBoxB))
 				{
-					float collisiontime = CollisionClass::SweptAABB(listBullet.at(j)->GetBox(), listTerrain.at(j)->GetBox(), normalx, normaly, deltaTime);
+					float collisiontime = CollisionClass::SweptAABB(listBullet.at(j)->GetBox(), listTerrain.at(i)->GetBox(), normalx, normaly, deltaTime);
 					float remainingtime = 1 - collisiontime;
 					if (remainingtime > 0)
 					{
 						listBullet.at(j)->AABBHandle(deltaTime, collisiontime);
 						listBullet.at(j)->Die();
-						if (listTerrain.at(j)->GetType() == TerrainType::BRICK)
-							listTerrain.at(j)->Die();
+						if (listTerrain.at(i)->GetType() == TerrainType::BRICK)
+							listTerrain.at(i)->Die();
 					}
 				}
 			}
@@ -194,10 +195,11 @@ bool GameManager::init()
 {
 	if (!Node::init())
 		return false;
-	InitMap();
 	this->addChild(BulletManager::GetInstance());
 	this->addChild(TankMgr::GetInstance());
 	this->addChild(TerrainManager::GetInstance());
+	InitMap();
+
 	return true;
 }
 
@@ -212,9 +214,7 @@ GameManager * GameManager::GetInstance()
 
 void GameManager::InitMap()
 {
-	Team characterTeam = Team::TeamBlue;
-	if(YourPos <= 1)
-
+	
 	TankMgr::GetInstance()->InitPlayers();
 	int ** matrixMap = LoadMap();
 	if (matrixMap != nullptr)

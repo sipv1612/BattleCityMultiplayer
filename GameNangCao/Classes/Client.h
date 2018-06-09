@@ -31,8 +31,11 @@ private:
 	int LPTail = 0;
 	int LPHead = 0;
 	int dataSize = 0;
-public:
+	static Client * instance;
 	Client();
+public:
+	
+	static Client * GetInstance();
 	~Client();
 	bool initClient();
 	bool connectClient();

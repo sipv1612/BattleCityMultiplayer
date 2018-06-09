@@ -15,9 +15,10 @@ public:
 	static BulletManager* GetInstance();
 	bool init();
 	void Update(float deltaTime);
+	void Spawn(int _ownerID, Team team, float x, float y, int bulletIndex, eMove dir = eMove::NONE);
 	void HandleShotPackage(BULLET_SPAWN package);
 	void HandleDiePackage(BULLET_DIE package);
-	void Spawn(int _ownerID, Team team, float x, float y, int bulletIndex, eMove dir = eMove::NONE);
+
 	cocos2d::Vector<Bullet*> GetBullets();
 };
 #endif // !BULLET_MANAGER

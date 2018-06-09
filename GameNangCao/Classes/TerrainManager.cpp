@@ -39,10 +39,11 @@ void TerrainManager::Spawn(TerrainType type, float x, float y)
 	auto terrain = TerrainObject::create();
 	terrain->SpawnTerrain(type, x, y);
 	terrain->SetID(listTerrain.size());
-	listTerrain.push_back(terrain);
+	listTerrain.pushBack(terrain);
+	addChild(terrain);
 }
 
-std::vector<TerrainObject*> TerrainManager::GetTerrains()
+Vector<TerrainObject*> TerrainManager::GetTerrains()
 {
 	return listTerrain;
 }

@@ -6,13 +6,13 @@
 class TerrainManager : public Node
 {
 private:
-	std::vector<TerrainObject*> listTerrain;
+	Vector<TerrainObject*> listTerrain;
 	static TerrainManager * instance;
 public:
 	static TerrainManager* create();
 	static TerrainManager* GetInstance();
 	bool init();
 	void Spawn(TerrainType type, float x, float y);
-	std::vector<TerrainObject* >GetTerrains();
+	Vector<TerrainObject* >GetTerrains();
 };
 #endif // !TERRAIN_MANAGER
