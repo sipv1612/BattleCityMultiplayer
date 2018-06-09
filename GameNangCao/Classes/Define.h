@@ -1,66 +1,242 @@
 #ifndef __DEFINE_H__
 #define __DEFINE_H__
 
+#include "cocos2d.h"
+#include "Box.h"
+
+USING_NS_CC;
 
 #define SPEED_TANK 100
-#define ROBOT_SPEED 70
+#define SPEED_ROBOT 70
 #define SPEED_BULLET 200
 #define SCREEN_HEIGHT 640
 #define SCREEN_WIDTH 640
-#define OBJECT_MOVE 1
-#define CHARACTOR_BITMASK 2
-#define TANK_BITMASK 3
-#define BRICK_BITMASK 4
-#define ROBOT_BITMASK 5
-#define BULLET_BITMASK 6
-#define OBJECT_STATIC 2
 
-class Box {
-public:
-	float x, y, vx, vy;
-	float width, height;
-
-	Box() {
-		x = y = vx = vy = width = height = 0;
-	}
-
-	Box(float x, float y, float vx, float vy, int width, int height)
-	{
-		this->x = x;
-		this->y = y;
-		this->vx = vx;
-		this->vy = vy;
-		this->width = width;
-		this->height = height;
-	}
+enum ObjectType
+{
+	TypeBrick,
+	TypeConcrete,
+	TypeTank,
+	TypeBullet,
+	TypeCommandBase,
+	TypeGun,
+	TypeItem,
+	None
 };
+
+enum ObjectType
+{
+	TypeBrick,
+	TypeConcrete,
+	TypeTank,
+	TypeBullet,
+	TypeCommandBase,
+	TypeItem,
+	None
+};
+
+enum TerrainType
+{
+	BRICK,
+	CONCRETE
+};
+
+enum Team
+{
+	TeamGreen,
+	TeamBlue,
+	None
+};
+
 enum eMove
 {
-	NONE = 0,
-	UP = 1,
-	LEFT = 2,
-	RIGHT = 3,
-	DOWN = 4,
-	DIE,
-	STAY,
-	BURST
-
+	NONE,
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT,
 };
 
-enum eAnimate
+enum KEY
 {
-	STOP,
-	RUN
+	TankMove,
+	TankDie,
+	TankRevial,
+	BulletSpawn,
+	BulletDie,
+	TerrainDie
 };
 
-enum eStatus
+struct PACKET_KEY
 {
-
+	KEY key;
+	PACKET_KEY(KEY _key)
+	{
+		key = _key;
+	}
 };
 
-enum eBullet
+struct TANK_MOVE
 {
+	int idTank;
+	float posX;
+	float posY;
+	eMove dir;
+	TANK_MOVE()
+	{
 
+	}
+	TANK_MOVE(int id, float x, float y, eMove drc)
+	{
+		idTank = id;
+		posX = x;
+		posY = y;
+		dir = drc;
+	}
 };
+struct TANK_DIE
+{
+	int idTank;
+	TANK_DIE() {}
+	TANK_DIE(int id)
+	{
+		idTank = id;
+	}
+};
+struct TANK_REVIVAL
+{
+	int idTank;
+	float posX;
+	float posY;
+	TANK_REVIVAL() {}
+	TANK_REVIVAL(int id, float x, float y)
+	{
+		idTank = id;
+		posX = x;
+		posY = y;
+	}
+};
+struct BULLET_SPAWN
+{
+	int idBullet;
+	float posX;
+	float posY;
+	eMove dir;
+	Team team;
+	BULLET_SPAWN() {}
+	BULLET_SPAWN(int id, float x, float y, eMove drc, Team own)
+	{
+		idBullet = id;
+		posX = x;
+		posY = y;
+		dir = drc;
+		team = own;
+	}
+};
+struct BULLET_DIE
+{
+	int idBullet;
+	BULLET_DIE() {}
+	BULLET_DIE(int id)
+	{
+		idBullet = id;
+	}
+};
+
+struct TERRAIN_DIE
+{
+	int idTerrain;
+	TERRAIN_DIE() {}
+	TERRAIN_DIE(int id)
+	{
+		idTerrain = id;
+	}
+};
+
+#pragma region Assets
+static const cocos2d::Size SIZE_BRICK = cocos2d::Size(32, 32);
+static const cocos2d::Size SIZE_CONCRETE = cocos2d::Size(32, 32);
+static const cocos2d::Size SIZE_COMMAND_BASE = cocos2d::Size(32, 32);
+static const cocos2d::Size SIZE_BULLET = cocos2d::Size(16, 16);
+static const cocos2d::Size SIZE_TANK = cocos2d::Size(198, 203);
+static const float MAX_HEALTH_BRICK = 3;
+
+static const char* SPRITE_BRICK = "Brick.png";
+static const char* SPRITE_CONCRETE = "Concrete.png";
+static const char* SPRITE_COMMAND_BASE = "CommandBase.png";
+static const char* SPRITE_BULLET = "Bullet.png";
+static const char* SPRITE_TANK_RED = "RedTank.png";
+static const char* SPRITE_TANK_BLUE = "BlueTeam.png";
+static const char* SPRITE_TANK_GREEN = "GreenTeam.png";
+static const char* SPRITE_EXPLOSION = "tburst.png";
+static const char* SPRITE_EXPLOSION_CHILD = "TBurst_%d.png";
+static const char* SPRITE_TANK_RED_CHILD = "RedTank%d.png";
+static const char* SPRITE_TANK_BLUE_CHILD = "BlueTeam%d.png";
+static const char* SPRITE_TANK_GREEN_CHILD = "GreenTeam%d.png";
+
+//----------------------------------
+
+static const char* PLIST_EXPLOSION = "tburst.plist";
+static const char* PLIST_TANK_RED = "RedTank.plist";
+static const char* PLIST_TANK_BLUE = "BlueTeam.plist";
+static const char* PLIST_TANK_GREEN = "GreenTeam.plist";
+#pragma endregion
+
+#pragma region FUNCTIONS
+inline void loadCaches()
+{
+	cocos2d::SpriteFrameCache *cache = cocos2d::SpriteFrameCache::getInstance();
+	cache->addSpriteFramesWithFile(PLIST_EXPLOSION, SPRITE_EXPLOSION);
+	cache->addSpriteFramesWithFile(PLIST_TANK_RED, SPRITE_TANK_RED);
+	cache->addSpriteFramesWithFile(PLIST_TANK_BLUE, SPRITE_TANK_BLUE);
+	cache->addSpriteFramesWithFile(PLIST_TANK_GREEN, SPRITE_TANK_GREEN);
+}
+
+inline cocos2d::Animate* getExplosionAnimate()
+{
+	cocos2d::SpriteFrameCache *cache = cocos2d::SpriteFrameCache::getInstance();
+	//create animate
+	cocos2d::Vector<cocos2d::SpriteFrame*> animFrames(5);
+	char str[20] = { 0 };
+	for (int i = 0; i < 5; i++) {
+		sprintf(str, SPRITE_EXPLOSION_CHILD, i);
+		cocos2d::SpriteFrame* frame = cache->getSpriteFrameByName(str);
+		animFrames.pushBack(frame);
+	}
+	auto animation = cocos2d::Animation::createWithSpriteFrames(animFrames, 0.05f);
+	auto animate = cocos2d::Animate::create(animation);
+	return animate;
+}
+
+inline cocos2d::Animate* getTankMoveAnimate(Team team, bool isBot = false)
+{
+	cocos2d::SpriteFrameCache *cache = cocos2d::SpriteFrameCache::getInstance();
+	//create animate
+	cocos2d::Vector<cocos2d::SpriteFrame*> animFrames;
+	char str[20] = { 0 };
+	switch (team)
+	{
+	case TeamBlue:
+		for (int i = 0; i < 8; i++) {
+			sprintf(str, SPRITE_TANK_BLUE_CHILD, i);
+			cocos2d::SpriteFrame* frame = cache->getSpriteFrameByName(str);
+			animFrames.pushBack(frame);
+		}
+		break;
+	case TeamGreen:
+		for (int i = 0; i < 8; i++) {
+			sprintf(str, SPRITE_TANK_GREEN_CHILD, i);
+			cocos2d::SpriteFrame* frame = cache->getSpriteFrameByName(str);
+			animFrames.pushBack(frame);
+		}
+		break;
+	default:
+		break;
+	}
+	auto animation = cocos2d::Animation::createWithSpriteFrames(animFrames, 0.05f);
+	auto animate = cocos2d::Animate::create(animation);
+	return animate;
+}
+#pragma endregion
 
 #endif
