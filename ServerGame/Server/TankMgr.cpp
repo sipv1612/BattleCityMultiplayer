@@ -23,11 +23,12 @@ TankMgr * TankMgr::GetInstance()
 
 void TankMgr::Update(float deltaTime)
 {
-	Packing();
 	for (int i = 0; i < listTank.size(); i++)
 	{
 		listTank[i]->Update(deltaTime);
 	}
+	Packing();
+
 }
 
 void TankMgr::Packing()
@@ -76,7 +77,7 @@ void TankMgr::Packing()
 void TankMgr::SpawnPlayer()
 {
 	printf("Spawn Player \n");
-	for (int i = 0; i < NUM_OF_PLAYER; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		auto player1 = new Tank();
 		Team team = i < 2 ? TEAM_1 : TEAM_2;

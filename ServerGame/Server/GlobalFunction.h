@@ -1,6 +1,8 @@
 #pragma once
 #include "GameMgr.h"
 #include "GlobalVariable.h"
+DWORD frameStart = 0;
+DWORD timesend = 0;
 BOOL CreateSocketInformation(SOCKET s, int* numOfPlayer)
 {
 	LPSOCKET_INFORMATION SI;
@@ -58,7 +60,7 @@ void SendData()
 			socketArray[i]->dataBufSend.buf = dataSendBuffer;
 			socketArray[i]->dataBufSend.len = LPDataSendBuffer;
 
-			printf("%d \n", LPDataSendBuffer);
+			//printf("%d \n", LPDataSendBuffer);
 			if (WSASend(socketArray[i]->socket, &(socketArray[i]->dataBufSend), 1, &socketArray[i]->bytesSEND, 0, NULL, NULL) == SOCKET_ERROR)
 			{
 				if (WSAGetLastError() != WSAEWOULDBLOCK)
@@ -186,6 +188,10 @@ void  NetworkProc(void* Data)
 		else //If enough player
 		{
 			gameRunning = true;
+			if (!frameStart)
+			{
+				frameStart = GetTickCount();
+			}
 			// Prepare the Read and Write socket sets for network I/O notification
 			FD_ZERO(&ReadSet);
 			FD_ZERO(&WriteSet);
@@ -239,8 +245,6 @@ void  NetworkProc(void* Data)
 }
 void GameProc(void* Data)
 {
-	DWORD frameStart = GetTickCount();
-	DWORD timesend = 0;
 	float tickPerFrame = (float)1 / 120;
 	float dt = 0;
 	float dtsend = 0;

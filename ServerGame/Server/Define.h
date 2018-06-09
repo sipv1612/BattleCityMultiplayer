@@ -24,7 +24,7 @@
 #define TANK_SHOOT_RATE 3
 
 #define ROBOT_SPEED 70.0f
-#define ROBOT_SHOOT_RATE 6
+#define ROBOT_SHOOT_RATE 3
 #define ROBOT_TIME_AI 3
 #define BULLET_WIDTH 2.8125
 #define BULLET_HEIGHT 3.75

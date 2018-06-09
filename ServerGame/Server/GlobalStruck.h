@@ -77,9 +77,13 @@ struct TANK_MOVE
 struct TANK_DIE
 {
 	int idTank;
-	TANK_DIE(int id)
+	float posX;
+	float posY;
+	TANK_DIE(int id, float x, float y)
 	{
 		idTank = id;
+		posX = x;
+		posY = y;
 	}
 };
 struct TANK_REVIVAL
@@ -113,9 +117,13 @@ struct BULLET_SPAWN
 struct BULLET_DIE
 {
 	int idBullet;
-	BULLET_DIE(int id)
+	float posX;
+	float posY;
+	BULLET_DIE(int id, float x, float y)
 	{
 		idBullet = id;
+		posX = x;
+		posY = y;
 	}
 };
 

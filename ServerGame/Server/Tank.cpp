@@ -54,7 +54,7 @@ void Tank::SendDataMove()
 	PACKET_KEY key = PACKET_KEY(TankMove);
 	memcpy(dataSendBuffer + LPDataSendBuffer, &key, sizeof PACKET_KEY);
 	LPDataSendBuffer += sizeof PACKET_KEY;
-	TANK_MOVE data = TANK_MOVE(iD, box->x, box->y, moveDir);
+	TANK_MOVE data = TANK_MOVE(iD, box->x, SCREEN_HEIGHT - box->y, moveDir);
 	memcpy(dataSendBuffer + LPDataSendBuffer, &data, sizeof TANK_MOVE);
 	LPDataSendBuffer += sizeof TANK_MOVE;
 }
@@ -64,7 +64,7 @@ void Tank::SendDataShoot()
 	PACKET_KEY key = PACKET_KEY(BulletSpawn);
 	memcpy(dataSendBuffer + LPDataSendBuffer, &key, sizeof PACKET_KEY);
 	LPDataSendBuffer += sizeof PACKET_KEY;
-	BULLET_SPAWN data = BULLET_SPAWN(iD, box->x, box->y, moveDir, team);
+	BULLET_SPAWN data = BULLET_SPAWN(iD, box->x, SCREEN_HEIGHT - box->y, moveDir, team);
 	memcpy(dataSendBuffer + LPDataSendBuffer, &data, sizeof BULLET_SPAWN);
 	LPDataSendBuffer += sizeof BULLET_SPAWN;
 }
@@ -74,7 +74,7 @@ void Tank::SendDataDie()
 	PACKET_KEY key = PACKET_KEY(TankDie);
 	memcpy(dataSendBuffer + LPDataSendBuffer, &key, sizeof PACKET_KEY);
 	LPDataSendBuffer += sizeof PACKET_KEY;
-	TANK_DIE data = TANK_DIE(iD);
+	TANK_DIE data = TANK_DIE(iD, box->x, SCREEN_HEIGHT - box->y);
 	memcpy(dataSendBuffer + LPDataSendBuffer, &data, sizeof TANK_DIE);
 	LPDataSendBuffer += sizeof TANK_DIE;
 	//printf("Tank Die \n");
@@ -171,6 +171,7 @@ void Tank::AIRobot(float deltaTime)
 			timeAIRobot = 0;
 			SendDataMove();
 		}
+
 		if (timeAIShoot >= ROBOT_SHOOT_RATE)
 		{
 			timeAIShoot = 0;
@@ -195,6 +196,7 @@ void Tank::Move(eMove dir)
 	{
 		dirShoot = moveDir;
 	}
+	SendDataMove();
 }
 
 
