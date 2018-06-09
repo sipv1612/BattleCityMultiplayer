@@ -80,6 +80,8 @@ bool Client::connectClient()
 
 bool Client::sendData()
 {
+	if (LPDataSendBuffer <= sizeof(int))
+		return false;
 	memcpy(dataSendBuffer, &LPDataSendBuffer, sizeof(int));
 	ret = send(sClient, dataSendBuffer, LPDataSendBuffer, 0);
 	if (ret == 0)
@@ -90,7 +92,7 @@ bool Client::sendData()
 		return false;
 	}
 
-	//CCLOG("send() should be fine. Send %d bytes\n", ret);
+	CCLOG("send() should be fine. Send %d bytes\n", ret);
 	LPDataSendBuffer = sizeof(int);
 	return true;
 }
@@ -207,7 +209,7 @@ int Client::Extras()
 				LPHead += keySize;
 				TankMgr::GetInstance()->HandleMovePackage(tankMove);
 
-				CCLOG("TankMove %f %f", tankMove.posX, tankMove.posY);
+				//CCLOG("TankMove %f %f", tankMove.posX, tankMove.posY);
 				break;
 
 			case TankDie:
@@ -215,7 +217,7 @@ int Client::Extras()
 				memcpy(&tankDie, Buffer + LPHead, keySize);
 				LPHead += keySize;
 				TankMgr::GetInstance()->HandleDiePackage(tankDie);
-				CCLOG("TankDie %d", tankDie.idTank);
+				//CCLOG("TankDie %d", tankDie.idTank);
 
 				break;
 
@@ -225,7 +227,7 @@ int Client::Extras()
 				LPHead += keySize;
 				TankMgr::GetInstance()->HandleRevivalPackage(tankRivival);
 
-				CCLOG("TankRevial %f %f", tankRivival.posX, tankRivival.posY);
+				//CCLOG("TankRevial %f %f", tankRivival.posX, tankRivival.posY);
 
 				break;
 
@@ -233,7 +235,8 @@ int Client::Extras()
 				keySize = sizeof BULLET_SPAWN;
 				memcpy(&bulletSpawn, Buffer + LPHead, keySize);
 				LPHead += keySize;
-				CCLOG("BulletSpawn %f %f", bulletSpawn.posX, bulletSpawn.posY);
+				BulletManager::GetInstance()->HandleShotPackage(bulletSpawn);
+				//CCLOG("BulletSpawn %f %f", bulletSpawn.posX, bulletSpawn.posY);
 
 				break;
 
@@ -241,7 +244,8 @@ int Client::Extras()
 				keySize = sizeof BULLET_DIE;
 				memcpy(&bulletDie, Buffer + LPHead, keySize);
 				LPHead += keySize;
-				CCLOG("BulletDie %d", bulletDie.idBullet);
+				BulletManager::GetInstance()->HandleDiePackage(bulletDie);
+				//CCLOG("BulletDie %d", bulletDie.idBullet);
 
 				break;
 
@@ -249,7 +253,8 @@ int Client::Extras()
 				keySize = sizeof TERRAIN_DIE;
 				memcpy(&terrainDie, Buffer + LPHead, keySize);
 				LPHead += keySize;
-				CCLOG("TerrainDie %d", terrainDie.idTerrain);
+				TerrainManager::GetInstance()->HandleDiePackage(terrainDie);
+				//CCLOG("TerrainDie %d", terrainDie.idTerrain);
 
 				break;
 

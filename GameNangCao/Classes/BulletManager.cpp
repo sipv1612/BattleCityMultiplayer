@@ -4,15 +4,9 @@ BulletManager* BulletManager::instance = 0;
 
 Bullet * BulletManager::GetNewBullet()
 {
-	for (int i = 0; i < listBullet.size(); i++)
-	{
-		if (listBullet.at(i)->IsDie())
-		{
-			return listBullet.at(i);
-		}
-	}
-	auto bullet = new Bullet();
+	auto bullet =  Bullet::create();
 	bullet->SetID(listBullet.size());
+	addChild(bullet);
 	listBullet.pushBack(bullet);
 	return bullet;
 }
@@ -70,7 +64,15 @@ void BulletManager::Spawn(int _ownerID, Team team, float x, float y, int bulletI
 
 void BulletManager::HandleShotPackage(BULLET_SPAWN package)
 {
-	auto bullet = listBullet.at(package.idBullet);
+	Bullet* bullet;
+	if (package.idBullet >= listBullet.size())
+	{
+		bullet = GetNewBullet();
+	}
+	else
+	{
+		bullet = listBullet.at(package.idBullet);
+	}
 	bullet->Spawn(0, package.team, package.posX, package.posY, package.dir);
 }
 

@@ -88,7 +88,8 @@ void HelloWorld::update(float delta)
 				YourPos = 1;
 				isTeam = true;
 			}
-			
+			auto endScene = GameStart::createScene();
+			Director::getInstance()->replaceScene(endScene);
 		}
 		if (Client::GetInstance()->getTeam() == 3)
 		{

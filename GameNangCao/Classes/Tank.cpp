@@ -41,6 +41,7 @@ bool Tank::init(Team _team, bool _isRobot)
 	}
 	this->SetBoxSize(TANK_BOX_SIZE, TANK_BOX_SIZE);
 	this->setScale(0.5);
+	this->SetSpeed(SPEED_TANK);
 	return true;
 }
 
@@ -64,6 +65,7 @@ void Tank::Reset()
 void Tank::SetRobot()
 {
 	this->isRobot = true;
+	this->SetSpeed(SPEED_ROBOT);
 }
 
 void Tank::Shoot(bool isPlayer)
@@ -75,12 +77,9 @@ void Tank::UpdateMove(float deltaTime)
 {
 	if (!IsDie())
 	{
-		if (!IsOutOfScreen())
-		{
-			box->x += box->vx * deltaTime;
-			box->y += box->vy * deltaTime;
-			this->setPosition(box->x, box->y);
-		}
+		box->x += box->vx * deltaTime;
+		box->y += box->vy * deltaTime;
+		this->setPosition(box->x, box->y);
 	}
 	else
 	{

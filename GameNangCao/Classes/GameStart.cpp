@@ -2,7 +2,7 @@
 #include "SimpleAudioEngine.h"
 #include "EndScene.h"
 #include "GameManager.h"
-#include <fstream>
+#include "Client.h"
 
 USING_NS_CC;
 Scene* GameStart::createScene()
@@ -25,12 +25,13 @@ Scene* GameStart::createScene()
 bool GameStart::init()
 {
 	this->addChild(GameManager::create());
-	
+	Client::GetInstance()->Reset();
 
 #pragma endregion
 	
 	//Tạo đối tượng lắng nghe va chạm nếu xảy ra
 	this->schedule(schedule_selector(GameStart::run));
+	
     return true;
 }
 void GameStart::menuCloseCallback(Ref* pSender)
@@ -55,11 +56,14 @@ void GameStart::update(float delta)
 }
 void GameStart::Recv()
 {
-	
+	Client::GetInstance()->sendData();
+	Client::GetInstance()->recvData();
+	Client::GetInstance()->Extras();
 }
 void GameStart::run(float delta)
 {
 	update(delta);
+	Recv();
 }
 
 

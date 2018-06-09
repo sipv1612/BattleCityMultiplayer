@@ -67,13 +67,14 @@ enum eMove
 
 enum KEY
 {
+	Nothing,
 	TankMove,
 	TankDie,
 	TankRevial,
 	BulletSpawn,
 	BulletDie,
-	TerrainDie,
-	Nothing
+	TerrainDie
+	
 };
 
 struct PACKET_KEY

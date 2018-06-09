@@ -62,6 +62,7 @@ void Character::SendDataShoot()
 void Character::Update(float deltaTime)
 {
 	UpdateMove(deltaTime);
+	UpdateShoot(deltaTime);
 }
 
 void Character::UpdateShoot(float deltaTime)
@@ -123,9 +124,10 @@ void Character::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 	break;
 	case EventKeyboard::KeyCode::KEY_SPACE:
 	{
-		if (!IsDie() && IsCanShoot())
+ 		if (!IsDie() && IsCanShoot())
 		{
 			SendDataShoot();
+			timeShoot = 0;
 		}
 	}
 	break;

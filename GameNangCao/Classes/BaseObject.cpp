@@ -50,15 +50,22 @@ void BaseObject::Move(eMove dir)
 	{
 	case eMove::UP:
 		SetVel(0, speedMove);
+		this->setRotation(0);
 		break;
 	case eMove::DOWN:
 		SetVel(0, -speedMove);
+		this->setRotation(180);
+
 		break;
 	case eMove::LEFT:
 		SetVel(-speedMove, 0);
+		this->setRotation(270);
+
 		break;
 	case eMove::RIGHT:
 		SetVel(speedMove, 0);
+		this->setRotation(90);
+
 		break;
 	default:
 		SetVel(0, 0);

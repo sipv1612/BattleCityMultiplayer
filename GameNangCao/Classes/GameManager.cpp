@@ -224,20 +224,20 @@ void GameManager::InitMap()
 			{
 				if (matrixMap[i][j] == MAP_TERRAIN_SLIVER)
 				{
-					TerrainManager::GetInstance()->Spawn(TerrainType::CONCRETE, j * MAP_TILED_SIZE, i * MAP_TILED_SIZE);
+					TerrainManager::GetInstance()->Spawn(TerrainType::CONCRETE, j * MAP_TILED_SIZE, SCREEN_HEIGHT - i * MAP_TILED_SIZE);
 				}
 				if (matrixMap[i][j] == MAP_TERRAIN_RED)
 				{
-					TerrainManager::GetInstance()->Spawn(TerrainType::BRICK, j * MAP_TILED_SIZE, i * MAP_TILED_SIZE);
+					TerrainManager::GetInstance()->Spawn(TerrainType::BRICK, j * MAP_TILED_SIZE, SCREEN_HEIGHT - i * MAP_TILED_SIZE);
 
 				}
 				if (matrixMap[i][j] == MAP_TANK_TEAM_1)
 				{
-					TankMgr::GetInstance()->Spawn(Team::TeamBlue, j * MAP_TILED_SIZE, i * MAP_TILED_SIZE);
+					TankMgr::GetInstance()->Spawn(Team::TeamBlue, j * MAP_TILED_SIZE, SCREEN_HEIGHT - i * MAP_TILED_SIZE);
 				}
 				if (matrixMap[i][j] == MAP_TANK_TEAM_2)
 				{
-					TankMgr::GetInstance()->Spawn(Team::TeamGreen, j * MAP_TILED_SIZE, i * MAP_TILED_SIZE);
+					TankMgr::GetInstance()->Spawn(Team::TeamGreen, j * MAP_TILED_SIZE, SCREEN_HEIGHT - i * MAP_TILED_SIZE);
 				}
 				/*if (matrixMap[i][j] == MAP_BIRTH_TEAM_1)
 				{

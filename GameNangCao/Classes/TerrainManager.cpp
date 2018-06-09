@@ -43,6 +43,12 @@ void TerrainManager::Spawn(TerrainType type, float x, float y)
 	addChild(terrain);
 }
 
+void TerrainManager::HandleDiePackage(TERRAIN_DIE package)
+{
+	auto terrain = listTerrain.at(package.idTerrain);
+	terrain->Die();
+}
+
 Vector<TerrainObject*> TerrainManager::GetTerrains()
 {
 	return listTerrain;

@@ -13,6 +13,7 @@ public:
 	static TerrainManager* GetInstance();
 	bool init();
 	void Spawn(TerrainType type, float x, float y);
+	void HandleDiePackage(TERRAIN_DIE package);
 	Vector<TerrainObject* >GetTerrains();
 };
 #endif // !TERRAIN_MANAGER

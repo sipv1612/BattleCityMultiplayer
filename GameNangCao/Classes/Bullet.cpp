@@ -24,6 +24,7 @@ bool Bullet::init()
 		return false;
 
 	this->setObjectSprite(Sprite::create(SPRITE_BULLET));
+	this->SetSpeed(SPEED_BULLET);
 	OwnerID = -1;
 
 	return true;
