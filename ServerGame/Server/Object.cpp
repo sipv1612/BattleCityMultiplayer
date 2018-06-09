@@ -66,6 +66,12 @@ bool Object::IsDie()
 	return isDie;
 }
 
+void Object::SetOriginPos(float x, float y)
+{
+	originX = x;
+	originY = y;
+}
+
 void Object::Die()
 {
 	isDie = true;

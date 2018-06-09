@@ -30,6 +30,7 @@ public:
 	virtual void SetBoxSize(int _width, int _height);
 	virtual void AABBHandle(float deltaTime, float collisionTime);
 	virtual bool IsDie();
+	virtual void SetOriginPos(float x, float y);
 
 	virtual Box * GetBox();
 	virtual Team GetTeam();

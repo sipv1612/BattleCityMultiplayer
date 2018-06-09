@@ -203,5 +203,6 @@ void Tank::Move(eMove dir)
 void Tank::Spawn(Team team, float x, float y, eMove dir)
 {
 	Object::Spawn(team, x, y, dir);
+	SetOriginPos(x, y);
 	timeDie = 0;
 }
