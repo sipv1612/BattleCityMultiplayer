@@ -1,6 +1,7 @@
 ﻿#include "GameStart.h"
 #include "SimpleAudioEngine.h"
 #include "EndScene.h"
+#include "GameManager.h"
 #include <fstream>
 
 USING_NS_CC;
@@ -23,9 +24,7 @@ Scene* GameStart::createScene()
 // on "init" you need to initialize your instance
 bool GameStart::init()
 {
-   
-	charactor->Spawn(TeamBlue, 100, 100);
-	addChild(charactor);
+	this->addChild(GameManager::create());
 	
 
 #pragma endregion
@@ -52,7 +51,6 @@ void GameStart::menuCloseCallback(Ref* pSender)
 }
 void GameStart::update(float delta)
 {
-	charactor->Update(delta);
 }
 void GameStart::Recv()
 {

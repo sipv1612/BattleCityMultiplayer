@@ -36,7 +36,7 @@ bool TerrainManager::init()
 
 void TerrainManager::Spawn(TerrainType type, float x, float y)
 {
-	auto terrain = new TerrainObject();
+	auto terrain = TerrainObject::create();
 	terrain->SpawnTerrain(type, x, y);
 	terrain->SetID(listTerrain.size());
 	listTerrain.push_back(terrain);
