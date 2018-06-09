@@ -4,8 +4,17 @@
 #include "BulletManager.h"
 #include "TerrainManager.h"
 
+Client* Client::instance = 0;
+
 Client::Client()
 {
+}
+
+Client * Client::GetInstance()
+{
+	if (!instance)
+		instance = new Client();
+	return instance;
 }
 
 Client::~Client()

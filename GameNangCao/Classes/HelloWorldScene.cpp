@@ -3,7 +3,6 @@
 
 
 USING_NS_CC;
-Client * client;
 int YourPos;
 Scene* HelloWorld::createScene()
 {
@@ -51,9 +50,7 @@ bool HelloWorld::init()
 		mTank[i]->setVisible(false);
 		addChild(mTank[i]);
 	}
-	client = new Client();
-	client->initClient();
-	client->connectClient();
+	Client::GetInstance();
 	this->scheduleUpdate();
     return true;
 }
@@ -75,26 +72,25 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
 }
 void HelloWorld::update(float delta)
 {
-	if (client->recvData())
+	if (Client::GetInstance()->recvData())
 	{
 
-		if (client->getTeam() == 1)
+		if (Client::GetInstance()->getTeam() == 1)
 		{
 			isTeam = true;
 			YourPos = 0;
 
 		}
-		if (client->getTeam() == 2)
+		if (Client::GetInstance()->getTeam() == 2)
 		{
 			if (isTeam == false)
 			{
 				YourPos = 1;
 				isTeam = true;
 			}
-			auto endScene = GameStart::createScene();
-			Director::getInstance()->replaceScene(endScene);
+			
 		}
-		if (client->getTeam() == 3)
+		if (Client::GetInstance()->getTeam() == 3)
 		{
 			if (isTeam == false)
 			{
@@ -102,7 +98,7 @@ void HelloWorld::update(float delta)
 				isTeam = true;
 			}
 		}
-		if (client->getTeam() == 4)
+		if (Client::GetInstance()->getTeam() == 4)
 		{
 			if (isTeam == false)
 			{
@@ -111,7 +107,7 @@ void HelloWorld::update(float delta)
 			auto endScene = GameStart::createScene();
 			Director::getInstance()->replaceScene(endScene);
 		}
-		for (int i = 0; i < client->getTeam(); i++)
+		for (int i = 0; i < Client::GetInstance()->getTeam(); i++)
 		{
 			mTank[i]->setVisible(true);
 		}
