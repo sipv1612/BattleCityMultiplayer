@@ -54,6 +54,8 @@ void Tank::Revival()
 {
 	this->isDie = false;
 	this->setVisible(true);
+	this->SetPos(originX, originY);
+	CCLOG("Respawn%f %f",this->getPosition().x, this->getPosition().y);
 }
 
 

@@ -25,8 +25,8 @@ bool BaseObject::init()
 	box = new Box();
 	team = Team::None;
 	moveDir = eMove::NONE;
-	originX = 0;
-	originX = 0;
+	originX = -1;
+	originX = -1;
 	speedMove = 0;
 	ID = 0;
 	isDie = false;
@@ -105,8 +105,14 @@ void BaseObject::Update(float deltaTime)
 void BaseObject::Spawn(Team _team, float _x, float _y, eMove _dir)
 {
 	SetPos(_x, _y);
+	if (originX < 0 || originY < 0)
+	{
+		originX = _x;
+		originY = _y;
+	}
 	moveDir = _dir;
 	team = _team;
+	this->setVisible(true);
 }
 
 void BaseObject::SetPos(float _x, float _y)

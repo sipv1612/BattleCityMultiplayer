@@ -52,7 +52,6 @@ void Bullet::Spawn(int _ownerID, Team _team, float _x, float _y, eMove _dir)
 		printf("NONEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE\n");
 		break;
 	}
-	scheduleUpdate();
 }
 
 int Bullet::getOwnerID()
