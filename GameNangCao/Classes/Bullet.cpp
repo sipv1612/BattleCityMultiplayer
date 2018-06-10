@@ -23,7 +23,7 @@ bool Bullet::init()
 	if (!BaseObject::init())
 		return false;
 
-	this->setObjectSprite(Sprite::create(SPRITE_BULLET));
+	this->setObjectSprite(SPRITE_BULLET);
 	this->SetSpeed(SPEED_BULLET);
 	OwnerID = -1;
 
@@ -32,7 +32,8 @@ bool Bullet::init()
 
 void Bullet::Spawn(int _ownerID, Team _team, float _x, float _y, eMove _dir)
 {
-	this->setObjectSprite(Sprite::create(SPRITE_BULLET));
+	this->setObjectSprite(SPRITE_BULLET);
+	this->setVisible(true);
 	OwnerID = _ownerID;
 	isDie = false;
 	SetSpeed(SPEED_BULLET);

@@ -26,12 +26,12 @@ bool Tank::init(Team _team, bool _isRobot)
 	{
 	case TeamGreen:
 		sprintf(str, SPRITE_TANK_GREEN_CHILD, 0);
-		this->setObjectSprite(Sprite::createWithSpriteFrameName(str));
+		this->setObjectSpriteFrame(str);
 		this->m_sprite->runAction(RepeatForever::create(getTankMoveAnimate(TeamGreen)));
 		break;
 	case TeamBlue:
 		sprintf(str, SPRITE_TANK_BLUE_CHILD, 0);
-		this->setObjectSprite(Sprite::createWithSpriteFrameName(str));
+		this->setObjectSpriteFrame(str);
 		this->m_sprite->runAction(RepeatForever::create(getTankMoveAnimate(TeamBlue)));
 		break;
 	case None:
@@ -50,12 +50,16 @@ bool Tank::IsRobot()
 	return isRobot;
 }
 
+void Tank::Spawn(Team _team, float _x, float _y, eMove _dir)
+{
+	BaseObject::Spawn(_team, _x, _y, _dir);
+}
+
 void Tank::Revival()
 {
-	this->isDie = false;
 	this->setVisible(true);
+	this->isDie = false;
 	this->SetPos(originX, originY);
-	CCLOG("Respawn%f %f",this->getPosition().x, this->getPosition().y);
 }
 
 
@@ -93,7 +97,8 @@ void Tank::UpdateMove(float deltaTime)
 void Tank::Update(float deltaTime)
 {
 	UpdateMove(deltaTime);
-
+	if (!isDie && this->m_sprite == nullptr)
+		CCLOG("Bug Bug Bug");
 }
 
 

@@ -85,21 +85,22 @@ void TankMgr::InitPlayers()
 void TankMgr::HandleMovePackage(TANK_MOVE package)
 {
 	auto tank = listTank.at(package.idTank);
-	tank->Move(package.dir);
 	tank->SetPos(package.posX, package.posY);
+	tank->Move(package.dir);
 }
 
 void TankMgr::HandleDiePackage(TANK_DIE package)
 {
 	auto tank = listTank.at(package.idTank);
-	tank->Die();
 	tank->SetPos(package.posX, package.posY);
+	tank->Die();
 }
 
 void TankMgr::HandleRevivalPackage(TANK_REVIVAL package)
 {
 	auto tank = listTank.at(package.idTank);
 	tank->Revival();
+	tank->setVisible(true);
 }
 
 cocos2d::Vector<Tank*> TankMgr::GetTanks()

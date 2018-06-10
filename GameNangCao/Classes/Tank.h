@@ -14,6 +14,7 @@ public:
 	bool init(Team _team = Team::TeamBlue, bool isRobot = false);
 
 	bool IsRobot();
+	void Spawn(Team _team, float _x, float _y, eMove _dir = NONE) override;
 	void Revival();
 	void Reset();
 	void SetRobot();

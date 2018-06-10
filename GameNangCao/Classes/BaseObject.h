@@ -21,7 +21,8 @@ public:
 
 	static BaseObject* create(Team _team = Team::None);
 	virtual bool init() override;
-	void setObjectSprite(cocos2d::Sprite* _sprite);
+	void setObjectSprite(const char* fileName);
+	void setObjectSpriteFrame(const char* frameName);
 	virtual void Move(eMove dir = NONE);
 	virtual void SetSpeed(float speed);
 	virtual void Die();
