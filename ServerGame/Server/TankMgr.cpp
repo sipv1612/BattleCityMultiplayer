@@ -27,8 +27,14 @@ void TankMgr::Update(float deltaTime)
 	{
 		listTank[i]->Update(deltaTime);
 	}
-	Packing();
+}
 
+void TankMgr::UpdateAIRobot(float deltaTime)
+{
+	for (int i = 0; i < listTank.size(); i++)
+	{
+		listTank[i]->AIRobot(deltaTime);
+	}
 }
 
 void TankMgr::Packing()

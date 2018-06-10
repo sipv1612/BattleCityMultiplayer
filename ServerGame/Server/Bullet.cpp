@@ -26,7 +26,7 @@ void Bullet::SendDataDie()
 	PACKET_KEY key = PACKET_KEY(BulletDie);
 	memcpy(dataSendBuffer + LPDataSendBuffer, &key, sizeof PACKET_KEY);
 	LPDataSendBuffer += sizeof PACKET_KEY;
-	BULLET_DIE data = BULLET_DIE(iD, box->x, SCREEN_HEIGHT - box->y);
+	BULLET_DIE data = BULLET_DIE(iD, box->x, box->y);
 	memcpy(dataSendBuffer + LPDataSendBuffer, &data, sizeof BULLET_DIE);
 	LPDataSendBuffer += sizeof BULLET_DIE;
 	//printf("Bullet Die \n");

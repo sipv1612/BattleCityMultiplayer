@@ -18,7 +18,6 @@ private:
 	void SendDataDie();
 	void UpdateShoot(float deltaTime);
 	void UpdateMove(float deltaTime);
-	void AIRobot(float deltaTime);
 	bool IsCanResurrection();
 	bool IsPlayerCanShoot();
 
@@ -35,6 +34,8 @@ public:
 	void Shoot(bool isPlayer = false);
 	void Move(eMove dir = NONE);
 	void Update(float deltaTime);
+	void AIRobot(float deltaTime);
+
 	void Spawn(Team team, float x, float y, eMove dir = NONE);
 };
 

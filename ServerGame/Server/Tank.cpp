@@ -54,7 +54,7 @@ void Tank::SendDataMove()
 	PACKET_KEY key = PACKET_KEY(TankMove);
 	memcpy(dataSendBuffer + LPDataSendBuffer, &key, sizeof PACKET_KEY);
 	LPDataSendBuffer += sizeof PACKET_KEY;
-	TANK_MOVE data = TANK_MOVE(iD, box->x, SCREEN_HEIGHT - box->y, moveDir);
+	TANK_MOVE data = TANK_MOVE(iD, box->x,  box->y, moveDir);
 	memcpy(dataSendBuffer + LPDataSendBuffer, &data, sizeof TANK_MOVE);
 	LPDataSendBuffer += sizeof TANK_MOVE;
 }
@@ -64,7 +64,7 @@ void Tank::SendDataShoot()
 	PACKET_KEY key = PACKET_KEY(BulletSpawn);
 	memcpy(dataSendBuffer + LPDataSendBuffer, &key, sizeof PACKET_KEY);
 	LPDataSendBuffer += sizeof PACKET_KEY;
-	BULLET_SPAWN data = BULLET_SPAWN(iD, box->x, SCREEN_HEIGHT - box->y, moveDir, team);
+	BULLET_SPAWN data = BULLET_SPAWN(iD, box->x, box->y, dirShoot, team);
 	memcpy(dataSendBuffer + LPDataSendBuffer, &data, sizeof BULLET_SPAWN);
 	LPDataSendBuffer += sizeof BULLET_SPAWN;
 }
@@ -74,7 +74,7 @@ void Tank::SendDataDie()
 	PACKET_KEY key = PACKET_KEY(TankDie);
 	memcpy(dataSendBuffer + LPDataSendBuffer, &key, sizeof PACKET_KEY);
 	LPDataSendBuffer += sizeof PACKET_KEY;
-	TANK_DIE data = TANK_DIE(iD, box->x, SCREEN_HEIGHT - box->y);
+	TANK_DIE data = TANK_DIE(iD, box->x, box->y);
 	memcpy(dataSendBuffer + LPDataSendBuffer, &data, sizeof TANK_DIE);
 	LPDataSendBuffer += sizeof TANK_DIE;
 	//printf("Tank Die \n");
@@ -99,7 +99,6 @@ void Tank::Update(float deltaTime)
 {
 	UpdateMove(deltaTime);
 	UpdateShoot(deltaTime);
-	AIRobot(deltaTime);
 }
 
 void Tank::UpdateShoot(float deltaTime)
@@ -113,22 +112,6 @@ void Tank::UpdateMove(float deltaTime)
 {
 	if (!IsDie())
 	{
-		if (box->x < 0 || box->x + box->width > SCREEN_WIDTH)
-		{
-			if (box->x < 0)
-				box->x = 0;
-			if (box->x + box->width > SCREEN_WIDTH)
-				box->x = SCREEN_WIDTH - box->width;
-			box->vx = 0;
-		}
-		if (box->y < 0 || box->y + box->height > SCREEN_HEIGHT)
-		{
-			if (box->y < 0)
-				box->y = 0;
-			if (box->y + box->height > SCREEN_HEIGHT)
-				box->y = SCREEN_HEIGHT - box->height;
-			box->vy = 0;
-		}
 		box->x += box->vx * deltaTime;
 		box->y += box->vy * deltaTime;
 		//printf("%f %f \n", box->vx, box->vy);

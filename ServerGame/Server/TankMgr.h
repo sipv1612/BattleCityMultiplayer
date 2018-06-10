@@ -22,6 +22,7 @@ private:
 public:
 	static TankMgr* GetInstance();
 	void Update(float deltaTime);
+	void UpdateAIRobot(float deltaTime);
 	void Packing();
 	void SpawnPlayer();
 	void SpawnRobot(Team team, float x, float y);
