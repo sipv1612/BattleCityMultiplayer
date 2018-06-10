@@ -30,9 +30,6 @@ bool BaseObject::init()
 	speedMove = 0;
 	ID = 0;
 	isDie = false;
-	this->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
-
-
 	return true;
 
 }
@@ -49,11 +46,11 @@ void BaseObject::Move(eMove dir)
 	switch (moveDir)
 	{
 	case eMove::UP:
-		SetVel(0, speedMove);
+		SetVel(0, -speedMove);
 		this->setRotation(0);
 		break;
 	case eMove::DOWN:
-		SetVel(0, -speedMove);
+		SetVel(0, speedMove);
 		this->setRotation(180);
 
 		break;
@@ -116,7 +113,7 @@ void BaseObject::SetPos(float _x, float _y)
 {
 	box->x = _x;
 	box->y = _y;
-	this->setPosition(_x, _y);
+	this->setPosition(_x, SCREEN_HEIGHT - box->y);
 }
 
 void BaseObject::SetVel(float _x, float _y)
@@ -157,4 +154,17 @@ Team BaseObject::GetTeam()
 bool BaseObject::IsDie()
 {
 	return isDie;
+}
+
+void BaseObject::AddDebug(Node* parent)
+{
+	
+	rectNode->drawRect(Vec2(box->x, box->y), Vec2(box->x + box->width, box->y + box->height), Color4F(1.0f, 0.3f, 0.3f, 1));
+	parent->addChild(rectNode, 9999);
+}
+
+void BaseObject::UpdateDebug()
+{
+	rectNode->clear();
+	rectNode->drawRect(Vec2(box->x, box->y), Vec2(box->x + box->width, box->y + box->height), Color4F(1.0f, 0.3f, 0.3f, 1));
 }

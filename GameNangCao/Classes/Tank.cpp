@@ -52,11 +52,10 @@ bool Tank::IsRobot()
 
 void Tank::Revival()
 {
+	this->isDie = false;
+	this->setVisible(true);
 }
 
-void Tank::Die()
-{
-}
 
 void Tank::Reset()
 {
@@ -79,7 +78,7 @@ void Tank::UpdateMove(float deltaTime)
 	{
 		box->x += box->vx * deltaTime;
 		box->y += box->vy * deltaTime;
-		this->setPosition(box->x, box->y);
+		this->setPosition(box->x, SCREEN_HEIGHT - box->y);
 	}
 	else
 	{

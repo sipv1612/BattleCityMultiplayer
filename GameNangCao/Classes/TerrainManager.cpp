@@ -34,11 +34,13 @@ bool TerrainManager::init()
 	return true;
 }
 
+
 void TerrainManager::Spawn(TerrainType type, float x, float y)
 {
 	auto terrain = TerrainObject::create();
 	terrain->SpawnTerrain(type, x, y);
 	terrain->SetID(listTerrain.size());
+	//terrain->AddDebug(this);
 	listTerrain.pushBack(terrain);
 	addChild(terrain);
 }
@@ -47,6 +49,7 @@ void TerrainManager::HandleDiePackage(TERRAIN_DIE package)
 {
 	auto terrain = listTerrain.at(package.idTerrain);
 	terrain->Die();
+	//terrain->rectNode->setVisible(false);
 }
 
 Vector<TerrainObject*> TerrainManager::GetTerrains()

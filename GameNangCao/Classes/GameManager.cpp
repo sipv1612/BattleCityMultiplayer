@@ -27,7 +27,7 @@ void GameManager::TankVsTerrain(float deltaTime)
 	{
 		for (int j = 0; j < listTerrain.size(); j++)
 		{
-			if (listTerrain.at(j)->IsDie() == false)
+			if (!listTerrain.at(j)->IsDie() && !listTank.at(i)->IsDie())
 			{
 				CollisionClass::GetSweptBroadphaseBox(listTank.at(i)->GetBox(), deltaTime, &broadPhaseBoxA);
 				CollisionClass::GetSweptBroadphaseBox(listTerrain.at(j)->GetBox(), deltaTime, &broadPhaseBoxB);
@@ -58,17 +58,20 @@ void GameManager::TankVsTank(float deltaTime)
 	{
 		for (int j = i + 1; j < listTank.size(); j++)
 		{
-			CollisionClass::GetSweptBroadphaseBox(listTank.at(i)->GetBox(), deltaTime, &broadPhaseBoxA);
-			CollisionClass::GetSweptBroadphaseBox(listTank.at(j)->GetBox(), deltaTime, &broadPhaseBoxB);
-
-			if (CollisionClass::AABBCheck(&broadPhaseBoxA, &broadPhaseBoxB))
+			if (!listTank.at(i)->IsDie() && !listTank.at(j)->IsDie())
 			{
-				float collisiontime = CollisionClass::SweptAABB(listTank.at(i)->GetBox(), listTank.at(j)->GetBox(), normalx, normaly, deltaTime);
-				float remainingtime = 1 - collisiontime;
-				if (remainingtime > 0)
+				CollisionClass::GetSweptBroadphaseBox(listTank.at(i)->GetBox(), deltaTime, &broadPhaseBoxA);
+				CollisionClass::GetSweptBroadphaseBox(listTank.at(j)->GetBox(), deltaTime, &broadPhaseBoxB);
+
+				if (CollisionClass::AABBCheck(&broadPhaseBoxA, &broadPhaseBoxB))
 				{
-					listTank.at(i)->Move();
-					listTank.at(j)->Move();
+					float collisiontime = CollisionClass::SweptAABB(listTank.at(i)->GetBox(), listTank.at(j)->GetBox(), normalx, normaly, deltaTime);
+					float remainingtime = 1 - collisiontime;
+					if (remainingtime > 0)
+					{
+						listTank.at(i)->Move();
+						listTank.at(j)->Move();
+					}
 				}
 			}
 		}
@@ -86,7 +89,7 @@ void GameManager::TankVsBullet(float deltaTime)
 	{
 		for (int j = 0; j < listBullet.size(); j++)
 		{
-			if (listBullet.at(j)->GetTeam() != listTank.at(i)->GetTeam() && !listBullet.at(j)->IsDie())
+			if (listBullet.at(j)->GetTeam() != listTank.at(i)->GetTeam() && !listBullet.at(j)->IsDie() && !listTank.at(i)->IsDie())
 			{
 				CollisionClass::GetSweptBroadphaseBox(listBullet.at(j)->GetBox(), deltaTime, &broadPhaseBoxA);
 				CollisionClass::GetSweptBroadphaseBox(listTank.at(i)->GetBox(), deltaTime, &broadPhaseBoxB);
@@ -198,7 +201,7 @@ bool GameManager::init()
 	this->addChild(BulletManager::GetInstance());
 	this->addChild(TankMgr::GetInstance());
 	this->addChild(TerrainManager::GetInstance());
-	InitMap();
+	this->InitMap();
 
 	return true;
 }
@@ -224,20 +227,20 @@ void GameManager::InitMap()
 			{
 				if (matrixMap[i][j] == MAP_TERRAIN_SLIVER)
 				{
-					TerrainManager::GetInstance()->Spawn(TerrainType::CONCRETE, j * MAP_TILED_SIZE, SCREEN_HEIGHT - i * MAP_TILED_SIZE);
+					TerrainManager::GetInstance()->Spawn(TerrainType::CONCRETE, j * MAP_TILED_SIZE, i * MAP_TILED_SIZE);
 				}
 				if (matrixMap[i][j] == MAP_TERRAIN_RED)
 				{
-					TerrainManager::GetInstance()->Spawn(TerrainType::BRICK, j * MAP_TILED_SIZE, SCREEN_HEIGHT - i * MAP_TILED_SIZE);
+					TerrainManager::GetInstance()->Spawn(TerrainType::BRICK, j * MAP_TILED_SIZE,  i * MAP_TILED_SIZE);
 
 				}
 				if (matrixMap[i][j] == MAP_TANK_TEAM_1)
 				{
-					TankMgr::GetInstance()->Spawn(Team::TeamBlue, j * MAP_TILED_SIZE, SCREEN_HEIGHT - i * MAP_TILED_SIZE);
+					TankMgr::GetInstance()->Spawn(Team::TeamBlue, j * MAP_TILED_SIZE, i * MAP_TILED_SIZE);
 				}
 				if (matrixMap[i][j] == MAP_TANK_TEAM_2)
 				{
-					TankMgr::GetInstance()->Spawn(Team::TeamGreen, j * MAP_TILED_SIZE, SCREEN_HEIGHT - i * MAP_TILED_SIZE);
+					TankMgr::GetInstance()->Spawn(Team::TeamGreen, j * MAP_TILED_SIZE, i * MAP_TILED_SIZE);
 				}
 				/*if (matrixMap[i][j] == MAP_BIRTH_TEAM_1)
 				{
@@ -289,3 +292,7 @@ void GameManager::Update(float deltaTime)
 	TankMgr::GetInstance()->Update(deltaTime);
 	BulletManager::GetInstance()->Update(deltaTime);
 }
+
+
+
+

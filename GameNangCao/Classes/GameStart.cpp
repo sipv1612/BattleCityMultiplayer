@@ -62,8 +62,8 @@ void GameStart::Recv()
 }
 void GameStart::run(float delta)
 {
-	update(delta);
 	Recv();
+	update(delta);
 }
 
 

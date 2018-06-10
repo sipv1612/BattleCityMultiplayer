@@ -15,7 +15,6 @@ public:
 
 	bool IsRobot();
 	void Revival();
-	void Die();
 	void Reset();
 	void SetRobot();
 	void Shoot(bool isPlayer = false);

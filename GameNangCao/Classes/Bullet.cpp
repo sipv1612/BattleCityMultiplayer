@@ -75,7 +75,7 @@ void Bullet::UpdateMove(float dt)
 		}
 		box->x += box->vx * dt;
 		box->y += box->vy * dt;
-		this->setPosition(box->x, box->y);
+		this->setPosition(box->x, SCREEN_HEIGHT - box->y);
 	}
 
 }

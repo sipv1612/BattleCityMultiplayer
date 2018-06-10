@@ -15,7 +15,10 @@ protected:
 	float originY;
 	float speedMove;
 	bool isDie;
+	
 public:
+	DrawNode * rectNode = DrawNode::create();
+
 	static BaseObject* create(Team _team = Team::None);
 	virtual bool init() override;
 	void setObjectSprite(cocos2d::Sprite* _sprite);
@@ -34,6 +37,8 @@ public:
 	virtual Box* GetBox();
 	virtual Team GetTeam();
 	virtual bool IsDie();
+	virtual void AddDebug(Node* parent);
+	virtual void UpdateDebug();
 
 };
 #endif // !BASE_OBJECT

@@ -21,10 +21,11 @@ bool TerrainObject::init()
 	if (!BaseObject::init())
 		return false;
 
-	SetBoxSize(SIZE_BRICK.width, SIZE_BRICK.height);
+	SetBoxSize(MAP_TILED_SIZE, MAP_TILED_SIZE);
 
 	return true;
 }
+
 
 void TerrainObject::SpawnTerrain(TerrainType _type, float _x, float _y)
 {

@@ -46,6 +46,7 @@ void TankMgr::Update(float deltaTime)
 	for (int i = 0; i < listTank.size(); i++)
 	{
 		listTank.at(i)->Update(deltaTime);
+		//listTank.at(i)->UpdateDebug();
 	}
 }
 
@@ -56,6 +57,7 @@ void TankMgr::Spawn(Team team, float x, float y, eMove dir, bool isCharactor)
 		auto tank = Character::create(team);
 		tank->SetID(listTank.size());
 		tank->Spawn(team, x, y);
+		//tank->AddDebug(this);
 		this->addChild(tank);
 		listTank.pushBack(tank);
 		return;
@@ -63,6 +65,7 @@ void TankMgr::Spawn(Team team, float x, float y, eMove dir, bool isCharactor)
 	auto tank = Tank::create(team);
 	tank->SetID(listTank.size());
 	tank->Spawn(team, x, y);
+	//tank->AddDebug(this);
 	this->addChild(tank);
 	listTank.pushBack(tank);
 

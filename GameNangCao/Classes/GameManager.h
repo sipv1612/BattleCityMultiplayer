@@ -10,7 +10,6 @@ class GameManager : public Node
 private:
 
 	static GameManager * instance;
-
 	void CheckCollsion(float deltaTime);
 	void TankVsTerrain(float deltaTime);
 	void TankVsTank(float deltaTime);
@@ -25,5 +24,6 @@ public:
 	bool init();
 	static GameManager * GetInstance();
 	void Update(float deltaTime);
+	
 };
 #endif

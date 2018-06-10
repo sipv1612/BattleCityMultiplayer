@@ -85,6 +85,8 @@ Character::~Character()
 
 void Character::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 {
+	if (IsDie())
+		return;
 	switch (keyCode)
 	{
 	case EventKeyboard::KeyCode::KEY_UP_ARROW:
@@ -142,6 +144,8 @@ void Character::onKeyPressed(EventKeyboard::KeyCode keyCode, Event * event)
 
 void Character::onKeyReleased(EventKeyboard::KeyCode keyCode, Event * event)
 {
+	if (IsDie())
+		return;
 	switch (keyCode)
 	{
 	case EventKeyboard::KeyCode::KEY_UP_ARROW:
