@@ -124,10 +124,10 @@ void Tank::UpdateMove(float deltaTime)
 	else
 	{
 		timeDie += deltaTime;
-	}
-	if (IsCanResurrection())
-	{
-		Revival();
+		if (IsCanResurrection())
+		{
+			Revival();
+		}
 	}
 }
 

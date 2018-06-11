@@ -34,11 +34,11 @@ void TerrainObject::SpawnTerrain(TerrainType _type, float _x, float _y)
 	switch (_type)
 	{
 	case BRICK:
-		this->setObjectSprite(cocos2d::Sprite::create(SPRITE_BRICK));
+		this->setObjectSprite(SPRITE_BRICK);
 		this->type = TerrainType::BRICK;
 		break;
 	case CONCRETE:
-		this->setObjectSprite(cocos2d::Sprite::create(SPRITE_CONCRETE));
+		this->setObjectSprite(SPRITE_CONCRETE);
 		this->type = TerrainType::CONCRETE;
 		break;
 	default:

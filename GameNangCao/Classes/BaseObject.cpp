@@ -34,10 +34,20 @@ bool BaseObject::init()
 
 }
 
-void BaseObject::setObjectSprite(cocos2d::Sprite *_sprite)
+void BaseObject::setObjectSprite(const char* fileName)
 {
-	this->m_sprite = _sprite;
-	this->addChild(_sprite);
+	if(m_sprite != nullptr)
+		this->m_sprite->removeFromParentAndCleanup(true);
+	this->m_sprite = Sprite::create(fileName);
+	this->addChild(m_sprite);
+}
+
+void BaseObject::setObjectSpriteFrame(const char * frameName)
+{
+	if (m_sprite != nullptr)
+		this->m_sprite->removeFromParentAndCleanup(true);
+	this->m_sprite = Sprite::createWithSpriteFrameName(frameName);
+	this->addChild(m_sprite);
 }
 
 void BaseObject::Move(eMove dir)
@@ -78,14 +88,18 @@ void BaseObject::SetSpeed(float speed)
 void BaseObject::Die()
 {
 	isDie = true;
+	this->setVisible(false);
 	//add explosion
+	Sprite *explosion = Sprite::create();
+	this->getParent()->addChild(explosion);
+	explosion->setPosition(this->getPosition());
 	Animate *explosionAnimate = getExplosionAnimate();
-	auto autoHideParent = CallFuncN::create(
+	auto autoSelfDestroy = CallFuncN::create(
 		[&](Node *sender)
 	{
-		sender->getParent()->setVisible(false);
+		sender->removeFromParentAndCleanup(true);
 	});
-	m_sprite->runAction(Sequence::create(explosionAnimate, autoHideParent, nullptr));
+	explosion->runAction(Sequence::create(explosionAnimate, autoSelfDestroy, nullptr));
 }
 
 void BaseObject::Reset()
@@ -112,6 +126,7 @@ void BaseObject::Spawn(Team _team, float _x, float _y, eMove _dir)
 	}
 	moveDir = _dir;
 	team = _team;
+	isDie = false;
 	this->setVisible(true);
 }
 
