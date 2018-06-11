@@ -31,11 +31,11 @@ public:
 	void Die();
 	void Reset();
 	void SetRobot();
+
 	void Shoot(bool isPlayer = false);
 	void Move(eMove dir = NONE);
 	void Update(float deltaTime);
 	void AIRobot(float deltaTime);
-
 	void Spawn(Team team, float x, float y, eMove dir = NONE);
 };
 

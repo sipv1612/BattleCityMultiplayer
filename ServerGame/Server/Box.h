@@ -17,4 +17,10 @@ public:
 		this->width = width;
 		this->height = height;
 	}
+	Box * Clone()
+	{
+		Box * box = new Box(x, y, vx, vy, width, height);
+		return box;
+	}
+
 };

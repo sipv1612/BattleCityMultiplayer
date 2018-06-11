@@ -61,6 +61,19 @@ Team Object::GetTeam()
 	return team;
 }
 
+Object * Object::Clone()
+{
+	auto object = new Object();
+	object->box = box->Clone();
+	object->isDie = isDie;
+	object->iD = iD;
+	object->team = team;
+	object->moveDir = moveDir;
+	object->speedMove = speedMove;
+
+	return object;
+}
+
 bool Object::IsDie()
 {
 	return isDie;

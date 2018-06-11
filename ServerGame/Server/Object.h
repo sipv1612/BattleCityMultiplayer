@@ -34,6 +34,7 @@ public:
 
 	virtual Box * GetBox();
 	virtual Team GetTeam();
+	virtual Object* Clone();
 
 };
 

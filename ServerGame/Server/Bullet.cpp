@@ -9,6 +9,7 @@ Bullet::Bullet()
 
 Bullet::~Bullet()
 {
+	delete box;
 }
 
 void Bullet::Die()
@@ -80,6 +81,7 @@ void Bullet::Spawn(Team _team, float x, float y, eMove dir)
 		break;
 	}
 }
+
 
 bool Bullet::IsOutOfScreen()
 {

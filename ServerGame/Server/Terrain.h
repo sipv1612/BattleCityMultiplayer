@@ -12,6 +12,7 @@ public:
 	void Die();
 	void SendDataDie();
 	void SpawnTerrain(TerrianType type, float x, float y);
+
 	TerrianType GetType();
 
 

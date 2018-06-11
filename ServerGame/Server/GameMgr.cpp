@@ -238,6 +238,11 @@ void GameMgr::InitMap()
 	{
 		printf("Load Map failed!!\n");
 	}
+	for (int i = 0; i < MAP_HEIGHT; i++)
+	{
+		delete[] matrixMap[i];
+	}
+	delete[] matrixMap;
 }
 
 int** GameMgr::LoadMap()

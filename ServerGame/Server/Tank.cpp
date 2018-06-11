@@ -11,6 +11,9 @@ Tank::Tank()
 
 Tank::~Tank()
 {
+	printf("Destroy Tank\n");
+
+	delete box;
 }
 
 
@@ -30,6 +33,8 @@ void Tank::SetRobot()
 	isRobot = true;
 	SetSpeed(ROBOT_SPEED);
 }
+
+
 
 void Tank::Revival()
 {

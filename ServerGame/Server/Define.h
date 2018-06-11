@@ -13,7 +13,8 @@
 #define CMD_BUFSIZE 102400
 #define NUM_OF_PLAYER 2
 #define BYTE_OF_CLIENT 28
- 
+#define FRAME_PER_SEC 120
+
 #pragma region GameInfo
 #define SCREEN_WIDTH 768
 #define SCREEN_HEIGHT 704

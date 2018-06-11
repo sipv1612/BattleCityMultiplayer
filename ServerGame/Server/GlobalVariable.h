@@ -8,6 +8,7 @@ extern bool gameEnded;
 extern int numOfPlayer;
 extern char* dataSendBuffer;
 extern int LPDataSendBuffer;
+extern float gameTime;
 extern HANDLE networkProc;
 extern HANDLE gameProc;
 extern DWORD Total;

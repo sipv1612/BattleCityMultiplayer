@@ -245,7 +245,7 @@ void  NetworkProc(void* Data)
 }
 void GameProc(void* Data)
 {
-	float tickPerFrame = (float)1 / 120;
+	float tickPerFrame = (float)(1 / FRAME_PER_SEC);
 	float dt = 0;
 	float dtsend = 0;
 	int TimeEnd = 0;
@@ -262,7 +262,7 @@ void GameProc(void* Data)
 			{
 
 				GameMgr::GetInstance()->Update(dt);
-
+				gameTime += dt;
 				if (dtsend > (float)1 / 30)
 				{
 

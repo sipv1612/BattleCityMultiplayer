@@ -91,6 +91,7 @@ void TankMgr::SpawnPlayer()
 		player1->SetID(listTank.size());
 		listTank.push_back(player1);
 	}
+	
 }
 
 void TankMgr::SpawnRobot(Team team, float x, float y)
@@ -110,4 +111,9 @@ std::vector<Tank*> TankMgr::GetTanks()
 
 TankMgr::~TankMgr()
 {
+	while (!listTank.empty())
+	{
+		delete listTank.front();
+		listTank.erase(listTank.begin());
+	}
 }

@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{D4FECB5F-25F9-49C0-A966-200AE3A127F6}</ProjectGuid>
     <RootNamespace>Server</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -120,8 +120,10 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BulletMgr.cpp" />
     <ClCompile Include="DataGame.cpp" />
+    <ClCompile Include="Frame.cpp" />
     <ClCompile Include="GameMgr.cpp" />
     <ClCompile Include="GlobalVariable.cpp" />
+    <ClCompile Include="LagCompensation.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Tank.cpp" />
@@ -137,10 +139,12 @@
     <ClInclude Include="DataGame.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="DefineInclude.h" />
+    <ClInclude Include="Frame.h" />
     <ClInclude Include="GameMgr.h" />
     <ClInclude Include="GlobalFunction.h" />
     <ClInclude Include="GlobalStruck.h" />
     <ClInclude Include="GlobalVariable.h" />
+    <ClInclude Include="LagCompensation.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ServerPacket.h" />
     <ClInclude Include="Tank.h" />
