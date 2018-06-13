@@ -14,7 +14,6 @@ private:
 	void Revival();
 	void SendDataRivival();
 	void SendDataMove();
-	void SendDataShoot();
 	void SendDataDie();
 	void UpdateShoot(float deltaTime);
 	void UpdateMove(float deltaTime);

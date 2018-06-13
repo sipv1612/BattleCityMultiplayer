@@ -27,7 +27,7 @@ public:
 	virtual void Spawn(Team team, float x, float y, eMove dir = NONE);
 	virtual void SetPos(float _x, float _y);
 	virtual void SetVel(float _x, float _y);
-	virtual void SetBoxSize(int _width, int _height);
+	virtual void SetBoxSize(float _width, float _height);
 	virtual void AABBHandle(float deltaTime, float collisionTime);
 	virtual bool IsDie();
 	virtual void SetOriginPos(float x, float y);

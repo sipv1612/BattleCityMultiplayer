@@ -64,15 +64,6 @@ void Tank::SendDataMove()
 	LPDataSendBuffer += sizeof TANK_MOVE;
 }
 
-void Tank::SendDataShoot()
-{
-	PACKET_KEY key = PACKET_KEY(BulletSpawn);
-	memcpy(dataSendBuffer + LPDataSendBuffer, &key, sizeof PACKET_KEY);
-	LPDataSendBuffer += sizeof PACKET_KEY;
-	BULLET_SPAWN data = BULLET_SPAWN(iD, box->x, box->y, dirShoot, team);
-	memcpy(dataSendBuffer + LPDataSendBuffer, &data, sizeof BULLET_SPAWN);
-	LPDataSendBuffer += sizeof BULLET_SPAWN;
-}
 
 void Tank::SendDataDie()
 {
@@ -157,7 +148,6 @@ void Tank::AIRobot(float deltaTime)
 				break;
 			}
 			timeAIRobot = 0;
-			SendDataMove();
 		}
 
 		if (timeAIShoot >= ROBOT_SHOOT_RATE)
@@ -174,7 +164,6 @@ void Tank::Shoot(bool isPlayer)
 	if (isPlayer && !IsPlayerCanShoot())
 		return;
 	BulletMgr::GetInstance()->Spawn(team, box->x, box->y, dirShoot);
-	SendDataShoot();
 }
 
 void Tank::Move(eMove dir)

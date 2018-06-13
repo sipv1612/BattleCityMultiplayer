@@ -239,7 +239,6 @@ void  NetworkProc(void* Data)
 			dataRecv->SetRet(ret);
 			delete datarev;
 			LeaveCriticalSection(&criticalDataRecv);
-
 		}
 	}
 }
@@ -265,8 +264,8 @@ void GameProc(void* Data)
 				gameTime += dt;
 				if (dtsend > (float)1 / 30)
 				{
-
 					SendData();
+
 					timesend = now;
 					/*if (_world.teamWin != 0)
 					{

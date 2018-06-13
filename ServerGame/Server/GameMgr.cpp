@@ -14,9 +14,9 @@ void GameMgr::CheckCollsion(float deltaTime)
 {
 	TankVsBullet(deltaTime);
 	TankVsTank(deltaTime);
-	TankVsTerrain(deltaTime);
 	BulletVsBullet(deltaTime);
 	BulletVsTerrain(deltaTime);
+	TankVsTerrain(deltaTime);
 }
 
 void GameMgr::TankVsTerrain(float deltaTime)

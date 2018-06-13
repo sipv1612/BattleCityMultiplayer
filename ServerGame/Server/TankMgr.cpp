@@ -47,7 +47,7 @@ void TankMgr::Packing()
 	{
 		*(lpHead) = 0;
 	}
-	if (*(lpHead) < *(lpTail))
+	while (*(lpHead) < *(lpTail))
 	{
 		int dataSize = 0;
 		memcpy(&dataSize, data + *(lpHead), sizeof(int));
@@ -71,7 +71,7 @@ void TankMgr::Packing()
 			case KeySend::Shoot:
 				memcpy(&shot, data + *(lpHead), sizeof RECV_SHOOT_DATA);
 				*(lpHead) += sizeof RECV_SHOOT_DATA;
-				listTank[shot.iD]->Shoot(shot.dirShot);
+				listTank[shot.iD]->Shoot(true);
 				break;
 			default:
 				break;
