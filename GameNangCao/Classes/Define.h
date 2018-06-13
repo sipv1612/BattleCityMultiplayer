@@ -178,6 +178,7 @@ struct TERRAIN_DIE
 		idTerrain = id;
 	}
 };
+
 struct GET_PING
 {
 	int iD;
@@ -190,6 +191,7 @@ struct GET_PING
 	}
 
 };
+
 enum KeySend
 {
 	Move,
@@ -222,6 +224,16 @@ struct SEND_SHOOT_DATA
 	{
 		iD = _iD;
 		dirShot = _dir;
+	}
+};
+struct SEND_PING
+{
+	int iD;
+	float gameTime;
+	SEND_PING(int _id, float _gameTime)
+	{
+		iD = _id;
+		gameTime = _gameTime;
 	}
 };
  
