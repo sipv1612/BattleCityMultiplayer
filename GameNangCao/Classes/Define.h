@@ -177,10 +177,23 @@ struct TERRAIN_DIE
 	}
 };
 
+struct PING
+{
+	int characterID;
+	float gameTime;
+	PING() {}
+	PING(int _characterID, float _gameTime)
+	{
+		characterID = _characterID;
+		gameTime = _gameTime;
+	}
+};
+
 enum KeySend
 {
 	Move,
-	Shoot
+	Shoot,
+	Ping
 };
 struct SEND_KEY
 {
@@ -208,6 +221,16 @@ struct SEND_SHOOT_DATA
 	{
 		iD = _iD;
 		dirShot = _dir;
+	}
+};
+struct SEND_PING
+{
+	int iD;
+	float gameTime;
+	SEND_PING(int _id, float _gameTime)
+	{
+		iD = _id;
+		gameTime = _gameTime;
 	}
 };
  
