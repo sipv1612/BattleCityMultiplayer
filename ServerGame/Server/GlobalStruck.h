@@ -49,7 +49,8 @@ enum KEY
 	TankRevial,
 	BulletSpawn,
 	BulletDie,
-	TerrainDie
+	TerrainDie,
+	GetPing
 };
 struct PACKET_KEY
 {
@@ -66,12 +67,15 @@ struct TANK_MOVE
 	float posX;
 	float posY;
 	eMove dir;
-	TANK_MOVE(int id, float x, float y, eMove drc)
+	float gameTime;
+	TANK_MOVE(){}
+	TANK_MOVE(int id, float x, float y, eMove drc, float _gameTime)
 	{
 		idTank = id;
 		posX = x;
 		posY = y;
 		dir = drc;
+		gameTime = _gameTime;
 	}
 };
 struct TANK_DIE
@@ -105,13 +109,16 @@ struct BULLET_SPAWN
 	float posY;
 	eMove dir;
 	Team team;
-	BULLET_SPAWN(int id, float x, float y, eMove drc, Team own)
+	float gameTime;
+	BULLET_SPAWN() {}
+	BULLET_SPAWN(int id, float x, float y, eMove drc, Team own, float _gameTime)
 	{
 		idBullet = id;
 		posX = x;
 		posY = y;
 		dir = drc;
 		team = own;
+		gameTime = _gameTime;
 	}
 };
 struct BULLET_DIE
@@ -135,10 +142,23 @@ struct TERRAIN_DIE
 		idTerrain = id;
 	}
 };
+struct GET_PING
+{
+	int iD;
+	float gameTime;
+	GET_PING() {}
+	GET_PING(int _id, float _gameTime)
+	{
+		iD = _id;
+		gameTime = _gameTime;
+	}
+
+};
 enum KeySend
 {
 	Move,
-	Shoot
+	Shoot,
+	Ping
 };
 struct RECV_KEY
 {

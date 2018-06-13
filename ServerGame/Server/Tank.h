@@ -30,6 +30,7 @@ public:
 	void Die();
 	void Reset();
 	void SetRobot();
+	void SendDataPing();
 
 	void Shoot(bool isPlayer = false);
 	void Move(eMove dir = NONE);

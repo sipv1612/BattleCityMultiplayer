@@ -60,7 +60,7 @@ void TankMgr::Packing()
 			*(lpHead) += sizeof RECV_KEY;
 			RECV_MOVE_DATA move;
 			RECV_SHOOT_DATA shot;
-
+			GET_PING ping;
 			switch (key.key)
 			{
 			case KeySend::Move:
@@ -73,6 +73,10 @@ void TankMgr::Packing()
 				*(lpHead) += sizeof RECV_SHOOT_DATA;
 				listTank[shot.iD]->Shoot(true);
 				break;
+			case KeySend::Ping:
+				memcpy(&ping, data + *(lpHead), sizeof GET_PING);
+				*(lpHead) += sizeof GET_PING;
+				listTank[ping.iD]->SendDataPing();
 			default:
 				break;
 			}

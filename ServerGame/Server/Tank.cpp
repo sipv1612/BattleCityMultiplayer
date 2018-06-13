@@ -59,7 +59,7 @@ void Tank::SendDataMove()
 	PACKET_KEY key = PACKET_KEY(TankMove);
 	memcpy(dataSendBuffer + LPDataSendBuffer, &key, sizeof PACKET_KEY);
 	LPDataSendBuffer += sizeof PACKET_KEY;
-	TANK_MOVE data = TANK_MOVE(iD, box->x,  box->y, moveDir);
+	TANK_MOVE data = TANK_MOVE(iD, box->x,  box->y, moveDir, gameTime);
 	memcpy(dataSendBuffer + LPDataSendBuffer, &data, sizeof TANK_MOVE);
 	LPDataSendBuffer += sizeof TANK_MOVE;
 }
@@ -74,6 +74,16 @@ void Tank::SendDataDie()
 	memcpy(dataSendBuffer + LPDataSendBuffer, &data, sizeof TANK_DIE);
 	LPDataSendBuffer += sizeof TANK_DIE;
 	//printf("Tank Die \n");
+}
+
+void Tank::SendDataPing()
+{
+	PACKET_KEY key = PACKET_KEY(GetPing);
+	memcpy(dataSendBuffer + LPDataSendBuffer, &key, sizeof PACKET_KEY);
+	LPDataSendBuffer += sizeof PACKET_KEY;
+	GET_PING data = GET_PING(iD, gameTime);
+	memcpy(dataSendBuffer + LPDataSendBuffer, &data, sizeof GET_PING);
+	LPDataSendBuffer += sizeof GET_PING;
 }
 
 bool Tank::IsRobot()
