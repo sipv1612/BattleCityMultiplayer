@@ -8,7 +8,6 @@
 class GameManager : public Node
 {
 private:
-
 	static GameManager * instance;
 	void CheckCollsion(float deltaTime);
 	void TankVsTerrain(float deltaTime);

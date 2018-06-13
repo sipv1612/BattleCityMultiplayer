@@ -30,15 +30,14 @@ bool Bullet::init()
 	return true;
 }
 
-void Bullet::Spawn(int _ownerID, Team _team, float _x, float _y, eMove _dir)
+void Bullet::Spawn(int _ownerID, Team _team, float _x, float _y, float _serverGameTime, eMove _dir)
 {
 	this->setObjectSprite(SPRITE_BULLET);
 	this->setVisible(true);
 	OwnerID = _ownerID;
 	isDie = false;
 	SetSpeed(SPEED_BULLET);
-	SetPos(_x, _y);
-	Move(_dir);
+	MoveRealtime(_x, _y, _serverGameTime, _dir);
 	switch (_dir)
 	{
 	case UP:

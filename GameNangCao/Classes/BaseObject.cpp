@@ -50,6 +50,17 @@ void BaseObject::setObjectSpriteFrame(const char * frameName)
 	this->addChild(m_sprite);
 }
 
+void BaseObject::MoveRealtime(float _x, float _y, float _serverGameTime, eMove _direction)
+{
+	SetPos(_x, _y);
+	Move(_direction);
+
+	float timeSpan = std::abs(GameTime - _serverGameTime);
+	float newPosX = _x + box->vx * timeSpan;
+	float newPosY = _y + box->vy * timeSpan;
+	SetPos(newPosX, newPosY);
+}
+
 void BaseObject::Move(eMove dir)
 {
 	moveDir = dir;

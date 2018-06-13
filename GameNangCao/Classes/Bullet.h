@@ -11,7 +11,7 @@ public:
 	static Bullet* create();
 	bool init();
 
-	void Spawn(int _ownerID, Team _team, float _x, float _y, eMove _dir = NONE);
+	void Spawn(int _ownerID, Team _team, float _x, float _y, float _serverGameTime, eMove _dir = NONE);
 	int getOwnerID();
 	void Update(float dt);
 	void UpdateMove(float dt);

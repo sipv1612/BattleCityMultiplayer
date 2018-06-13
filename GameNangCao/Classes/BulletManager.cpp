@@ -73,7 +73,7 @@ void BulletManager::HandleShotPackage(BULLET_SPAWN package)
 	{
 		bullet = listBullet.at(package.idBullet);
 	}
-	bullet->Spawn(0, package.team, package.posX, package.posY, package.dir);
+	bullet->Spawn(0, package.team, package.posX, package.posY, package.gameTime, package.dir);
 }
 
 void BulletManager::HandleDiePackage(BULLET_DIE package)
