@@ -26,6 +26,7 @@ Client::~Client()
 bool Client::initClient()
 {
 	strcpy_s(szServer, sizeof(szServer), "127.0.0.1");
+	//strcpy_s(szServer, sizeof(szServer), "192.168.1.88");
 	if (WSAStartup(MAKEWORD(2, 2), &wsd) != 0)
 	{
 		CCLOG("Failed to load Winsock library! Error %d\n", WSAGetLastError());

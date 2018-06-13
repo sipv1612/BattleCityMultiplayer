@@ -85,8 +85,9 @@ void TankMgr::InitPlayers()
 void TankMgr::HandleMovePackage(TANK_MOVE package)
 {
 	auto tank = listTank.at(package.idTank);
-	tank->SetPos(package.posX, package.posY);
-	tank->Move(package.dir);
+	//tank->SetPos(package.posX, package.posY);
+	//tank->Move(package.dir);
+	tank->MoveRealtime(package.posX, package.posY, package.gameTime, package.dir);
 }
 
 void TankMgr::HandleDiePackage(TANK_DIE package)

@@ -23,6 +23,7 @@ public:
 	virtual bool init() override;
 	void setObjectSprite(const char* fileName);
 	void setObjectSpriteFrame(const char* frameName);
+	virtual void MoveRealtime(float _x, float _y,float _severGameTime, eMove _direction);
 	virtual void Move(eMove dir = NONE);
 	virtual void SetSpeed(float speed);
 	virtual void Die();

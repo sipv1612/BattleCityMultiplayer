@@ -39,7 +39,6 @@ void GameManager::TankVsTerrain(float deltaTime)
 					if (remainingtime > 0)
 					{
 						listTank.at(i)->Move();
-
 					}
 				}
 			}
@@ -102,7 +101,7 @@ void GameManager::TankVsBullet(float deltaTime)
 					{
 						listBullet.at(j)->AABBHandle(deltaTime, collisiontime);
 						listBullet.at(j)->Die();
-						listTank.at(i)->Die();
+						//listTank.at(i)->Die();
 					}
 				}
 
@@ -135,8 +134,8 @@ void GameManager::BulletVsTerrain(float deltaTime)
 					{
 						listBullet.at(j)->AABBHandle(deltaTime, collisiontime);
 						listBullet.at(j)->Die();
-						if (listTerrain.at(i)->GetType() == TerrainType::BRICK)
-							listTerrain.at(i)->Die();
+						//if (listTerrain.at(i)->GetType() == TerrainType::BRICK)
+							//listTerrain.at(i)->Die();
 					}
 				}
 			}
@@ -202,6 +201,8 @@ bool GameManager::init()
 	this->addChild(TankMgr::GetInstance());
 	this->addChild(TerrainManager::GetInstance());
 	this->InitMap();
+
+	GameTime = 0;
 
 	return true;
 }
@@ -291,6 +292,7 @@ void GameManager::Update(float deltaTime)
 	CheckCollsion(deltaTime);
 	TankMgr::GetInstance()->Update(deltaTime);
 	BulletManager::GetInstance()->Update(deltaTime);
+	GameTime += deltaTime;
 }
 
 

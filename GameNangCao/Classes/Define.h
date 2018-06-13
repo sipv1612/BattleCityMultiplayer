@@ -32,6 +32,8 @@ USING_NS_CC;
 #define BUFFER_SIZE			20480
 #define DATA_BUFFER			8192
 
+static float GameTime;
+
 enum ObjectType
 {
 	TypeBrick,
@@ -92,16 +94,18 @@ struct TANK_MOVE
 	float posX;
 	float posY;
 	eMove dir;
+	float gameTime;
 	TANK_MOVE()
 	{
 
 	}
-	TANK_MOVE(int id, float x, float y, eMove drc)
+	TANK_MOVE(int id, float x, float y, eMove drc, float _gameTime)
 	{
 		idTank = id;
 		posX = x;
 		posY = y;
 		dir = drc;
+		gameTime = _gameTime;
 	}
 };
 struct TANK_DIE
@@ -137,14 +141,16 @@ struct BULLET_SPAWN
 	float posY;
 	eMove dir;
 	Team team;
+	float gameTime;
 	BULLET_SPAWN() {}
-	BULLET_SPAWN(int id, float x, float y, eMove drc, Team own)
+	BULLET_SPAWN(int id, float x, float y, eMove drc, Team own, float _gameTime)
 	{
 		idBullet = id;
 		posX = x;
 		posY = y;
 		dir = drc;
 		team = own;
+		gameTime = _gameTime;
 	}
 };
 struct BULLET_DIE
