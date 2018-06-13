@@ -26,6 +26,7 @@ USING_NS_CC;
 #define MAP_BIRTH_TEAM_1 6
 #define MAP_BIRTH_TEAM_2 2
 
+#define CHECK_PING_RATE 0.5
 #define DEFAULT_COUNT       2
 #define DEFAULT_PORT        5150
 #define DEFAULT_BUFFER      5000
@@ -75,7 +76,8 @@ enum KEY
 	TankRevial,
 	BulletSpawn,
 	BulletDie,
-	TerrainDie
+	TerrainDie,
+	GetPing
 	
 };
 
@@ -176,11 +178,23 @@ struct TERRAIN_DIE
 		idTerrain = id;
 	}
 };
+struct GET_PING
+{
+	int iD;
+	float gameTime;
+	GET_PING() {}
+	GET_PING(int _id, float _gameTime) 
+	{
+		iD = _id;
+		gameTime = _gameTime;
+	}
 
+};
 enum KeySend
 {
 	Move,
-	Shoot
+	Shoot,
+	Ping
 };
 struct SEND_KEY
 {

@@ -3,6 +3,7 @@
 #include "TankMgr.h"
 #include "BulletManager.h"
 #include "TerrainManager.h"
+#include "GameManager.h"
 
 Client* Client::instance = 0;
 
@@ -201,7 +202,7 @@ int Client::Extras()
 			BULLET_SPAWN bulletSpawn;
 			BULLET_DIE bulletDie;
 			TERRAIN_DIE terrainDie;
-
+			GET_PING getPing;
 			switch (key.key)
 			{
 			case TankMove:
@@ -258,7 +259,12 @@ int Client::Extras()
 				//CCLOG("TerrainDie %d", terrainDie.idTerrain);
 
 				break;
-
+			case GetPing:
+				keySize = sizeof GET_PING;
+				memcpy(&getPing, Buffer + LPHead, keySize);
+				LPHead += keySize;
+				GameManager::GetInstance()->HandlePing(getPing.iD);
+				break;
 			default:
 				break;
 			}
