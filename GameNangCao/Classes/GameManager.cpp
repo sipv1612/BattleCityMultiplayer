@@ -121,7 +121,7 @@ void GameManager::BulletVsTerrain(float deltaTime)
 
 		for (int j = 0; j < listBullet.size(); j++)
 		{
-			if (!listBullet.at(j)->IsDie() && !listTerrain.at(i)->IsDie())
+			if (listBullet.at(j)->GetTeam() != listTerrain.at(i)->GetTeam() && !listBullet.at(j)->IsDie() && !listTerrain.at(i)->IsDie())
 			{
 				CollisionClass::GetSweptBroadphaseBox(listBullet.at(j)->GetBox(), deltaTime, &broadPhaseBoxA);
 				CollisionClass::GetSweptBroadphaseBox(listTerrain.at(i)->GetBox(), deltaTime, &broadPhaseBoxB);
@@ -223,6 +223,10 @@ void GameManager::InitMap()
 	int ** matrixMap = LoadMap();
 	if (matrixMap != nullptr)
 	{
+		//spawn 2 commandbase
+		TerrainManager::GetInstance()->SpawnCommandBase(Team::TeamBlue, 12 * MAP_TILED_SIZE, 21 * MAP_TILED_SIZE);
+		TerrainManager::GetInstance()->SpawnCommandBase(Team::TeamGreen, 12 * MAP_TILED_SIZE, 1 * MAP_TILED_SIZE);
+
 		for (int i = 0; i < MAP_HEIGHT; i++)
 			for (int j = 0; j < MAP_WIDTH; j++)
 			{

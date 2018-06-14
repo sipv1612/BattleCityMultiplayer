@@ -9,7 +9,7 @@ private:
 public:
 	static TerrainObject* create();
 	bool init();
-	void SpawnTerrain(TerrainType _type, float _x, float _y);
+	void SpawnTerrain(TerrainType _type, float _x, float _y, Team _team = Team::None);
 	TerrainType GetType();
 };
 #endif // !TERRAIN_OBJECT

@@ -25,6 +25,15 @@ void TerrainMgr::Update(float deltaTime)
 {
 }
 
+void TerrainMgr::SpawnCommandBase(Team _team, float _x, float _y)
+{
+	auto terrain = new Terrain();
+	terrain->SpawnTerrain(COMMANDBASE, _x, _y, _team);
+	terrain->SetID(listTerrain.size());
+	//terrain->AddDebug(this);
+	listTerrain.push_back(terrain);
+}
+
 void TerrainMgr::Spawn(TerrianType type, float x, float y)
 {
 	auto terrain = new Terrain();

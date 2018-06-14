@@ -30,9 +30,14 @@ void Terrain::SendDataDie()
 
 }
 
-void Terrain::SpawnTerrain(TerrianType _type, float x, float y)
+void Terrain::SpawnTerrain(TerrianType _type, float x, float y, Team _team)
 {
 	type = _type;
+
+	if (_type == TerrianType::COMMANDBASE)
+	{
+		team = _team;
+	}
 
 	SetPos(x, y);
 }

@@ -86,7 +86,7 @@ void TankMgr::SpawnPlayer()
 	for (int i = 0; i < 4; i++)
 	{
 		auto player1 = new Tank();
-		Team team = i < 2 ? TEAM_1 : TEAM_2;
+		Team team = i < 2 ? TEAM_GREEN : TEAM_BLUE;
 		player1->Spawn(team, listPosPlayer[i].x, listPosPlayer[i].y);
 		player1->SetID(listTank.size());
 		listTank.push_back(player1);

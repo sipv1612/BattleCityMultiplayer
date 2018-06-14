@@ -169,8 +169,6 @@ int Client::getTeam()
 	return 0;
 }
 
-
-
 int Client::Extras()
 {
 	//int teamWin = 0;

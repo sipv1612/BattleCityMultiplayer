@@ -2,13 +2,13 @@
 #define __HELLOWORLD_SCENE_H__
 
 #include "cocos2d.h"
+#include "Define.h"
 
 class EndScene : public cocos2d::Layer
 {
-private:
-	
 public:
-    static cocos2d::Scene* createScene( int Winer);
+	Team teamWin;
+    static cocos2d::Scene* createScene(Team Winer);
 
     virtual bool init();
     // a selector callback

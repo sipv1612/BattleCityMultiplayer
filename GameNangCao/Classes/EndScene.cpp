@@ -1,17 +1,14 @@
 ﻿#include "EndScene.h"
 
-
-
 USING_NS_CC;
-unsigned int TeamWinner;
-Scene* EndScene::createScene( int Winner)
+Scene* EndScene::createScene(Team Winner)
 {
     
 	// 'scene' is an autorelease object
 	auto scene = Scene::create();
-	TeamWinner = Winner;
-    // 'layer' is an autorelease object
+	// 'layer' is an autorelease object
     auto layer = EndScene::create();
+	layer->teamWin = Winner;
 	
     // add layer as a child to scene
     scene->addChild(layer);
@@ -31,17 +28,23 @@ bool EndScene::init()
     }
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
-	if (TeamWinner == 1)
+	cocos2d::Sprite *backGround;
+	switch (teamWin)
 	{
-		auto backGround = cocos2d::Sprite::create("Blue.png");
+	case TeamGreen:
+		backGround = cocos2d::Sprite::create("Green.png");
 		backGround->setPosition(visibleSize.width / 2, visibleSize.height / 2);
 		addChild(backGround);
-	}
-	else
-	{
-		auto backGround = cocos2d::Sprite::create("Red.png");
+		break;
+	case TeamBlue:
+		backGround = cocos2d::Sprite::create("Blue.png");
 		backGround->setPosition(visibleSize.width / 2, visibleSize.height / 2);
 		addChild(backGround);
+		break;
+	case None:
+		break;
+	default:
+		break;
 	}
     return true;
 }

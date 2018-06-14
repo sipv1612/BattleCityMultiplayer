@@ -3,7 +3,7 @@
 Object::Object()
 {
 	box = new Box();
-	team = Team::TEAM_1;
+	team = Team::TEAM_GREEN;
 	moveDir = eMove::NONE;
 	originX = 0;
 	originX = 0;

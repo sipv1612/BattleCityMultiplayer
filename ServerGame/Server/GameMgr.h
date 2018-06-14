@@ -8,6 +8,8 @@ private:
 
 	static GameMgr * instance;
 
+	Team teamWon;
+
 	GameMgr();
 	void CheckCollsion(float deltaTime);
 	void TankVsTerrain(float deltaTime);

@@ -7,6 +7,7 @@
 GameMgr* GameMgr::instance = 0;
 GameMgr::GameMgr()
 {
+	teamWon = Team::TEAM_NONE;
 	InitMap();
 }
 
@@ -125,7 +126,7 @@ void GameMgr::BulletVsTerrain(float deltaTime)
 
 		for (int j = 0; j < listBullet.size(); j++)
 		{
-			if (!listBullet.at(j)->IsDie() && !listTerrain.at(i)->IsDie())
+			if (listBullet.at(j)->GetTeam() != listTerrain.at(i)->GetTeam() && !listBullet.at(j)->IsDie() && !listTerrain.at(i)->IsDie())
 			{
 				CollisionClass::GetSweptBroadphaseBox(listBullet.at(j)->GetBox(), deltaTime, &broadPhaseBoxA);
 				CollisionClass::GetSweptBroadphaseBox(listTerrain.at(i)->GetBox(), deltaTime, &broadPhaseBoxB);
@@ -138,8 +139,10 @@ void GameMgr::BulletVsTerrain(float deltaTime)
 					{
 						listBullet.at(j)->AABBHandle(deltaTime, collisiontime);
 						listBullet.at(j)->Die();
-						if (listTerrain.at(i)->GetType() == TerrianType::REB)
+						if (listTerrain.at(i)->GetType() == TerrianType::REB || listTerrain.at(i)->GetType() == TerrianType::COMMANDBASE)
 							listTerrain.at(i)->Die();
+						if (listTerrain.at(i)->GetType() == TerrianType::COMMANDBASE)
+							teamWon = listTerrain.at(i)->GetTeam();
 					}
 				}
 			}
@@ -202,6 +205,10 @@ void GameMgr::InitMap()
 	int ** matrixMap = LoadMap();
 	if (matrixMap != nullptr)
 	{
+		//spawn 2 commandbase
+		TerrainMgr::GetInstance()->SpawnCommandBase(Team::TEAM_BLUE, 12 * MAP_TILED_SIZE, 21 * MAP_TILED_SIZE);
+		TerrainMgr::GetInstance()->SpawnCommandBase(Team::TEAM_GREEN, 12 * MAP_TILED_SIZE, 1 * MAP_TILED_SIZE);
+
 		for (int i = 0; i < MAP_HEIGHT; i++)
 			for (int j = 0; j < MAP_WIDTH; j++)
 			{
@@ -216,11 +223,11 @@ void GameMgr::InitMap()
 				}
 				if (matrixMap[i][j] == MAP_TANK_TEAM_1)
 				{
-					TankMgr::GetInstance()->SpawnRobot(TEAM_1, j * MAP_TILED_SIZE, i * MAP_TILED_SIZE);
+					TankMgr::GetInstance()->SpawnRobot(TEAM_GREEN, j * MAP_TILED_SIZE, i * MAP_TILED_SIZE);
 				}
 				if (matrixMap[i][j] == MAP_TANK_TEAM_2)
 				{
-					TankMgr::GetInstance()->SpawnRobot(TEAM_2, j * MAP_TILED_SIZE, i * MAP_TILED_SIZE);
+					TankMgr::GetInstance()->SpawnRobot(TEAM_BLUE, j * MAP_TILED_SIZE, i * MAP_TILED_SIZE);
 				}
 				/*if (matrixMap[i][j] == MAP_BIRTH_TEAM_1)
 				{
@@ -268,6 +275,8 @@ int** GameMgr::LoadMap()
 
 void GameMgr::Update(float deltaTime)
 {
+	if (teamWon != Team::TEAM_NONE)
+		return;
 	TankMgr::GetInstance()->Packing();
 	TankMgr::GetInstance()->UpdateAIRobot(deltaTime);
 	CheckCollsion(deltaTime);

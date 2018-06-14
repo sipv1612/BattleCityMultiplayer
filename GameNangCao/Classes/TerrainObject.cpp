@@ -27,7 +27,7 @@ bool TerrainObject::init()
 }
 
 
-void TerrainObject::SpawnTerrain(TerrainType _type, float _x, float _y)
+void TerrainObject::SpawnTerrain(TerrainType _type, float _x, float _y, Team _team)
 {
 	type = _type;
 	SetPos(_x, _y);
@@ -40,6 +40,11 @@ void TerrainObject::SpawnTerrain(TerrainType _type, float _x, float _y)
 	case CONCRETE:
 		this->setObjectSprite(SPRITE_CONCRETE);
 		this->type = TerrainType::CONCRETE;
+		break;
+	case COMMANDBASE:
+		this->setObjectSprite(SPRITE_COMMAND_BASE);
+		this->type = TerrainType::COMMANDBASE;
+		this->team = _team;
 		break;
 	default:
 		break;

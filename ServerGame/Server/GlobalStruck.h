@@ -11,14 +11,16 @@ enum eMove
 
 enum Team 
 {
-	TEAM_1,
-	TEAM_2
+	TEAM_GREEN,
+	TEAM_BLUE,
+	TEAM_NONE
 };
 
 enum TerrianType 
 { 
 	REB,
-	SILVER 
+	SILVER,
+	COMMANDBASE
 };
 
 typedef struct _SOCKET_INFORMATION {

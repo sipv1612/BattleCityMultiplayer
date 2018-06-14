@@ -48,7 +48,8 @@ enum ObjectType
 enum TerrainType
 {
 	BRICK,
-	CONCRETE
+	CONCRETE,
+	COMMANDBASE
 };
 
 enum Team

@@ -1,4 +1,5 @@
 #include "TerrainManager.h"
+#include "EndScene.h"
 
 TerrainManager* TerrainManager::instance = 0;
 
@@ -34,6 +35,16 @@ bool TerrainManager::init()
 	return true;
 }
 
+void TerrainManager::SpawnCommandBase(Team _team, float _x, float _y)
+{
+	auto terrain = TerrainObject::create();
+	terrain->SpawnTerrain(COMMANDBASE, _x, _y, _team);
+	terrain->SetID(listTerrain.size());
+	//terrain->AddDebug(this);
+	listTerrain.pushBack(terrain);
+	addChild(terrain);
+}
+
 
 void TerrainManager::Spawn(TerrainType type, float x, float y)
 {
@@ -50,6 +61,12 @@ void TerrainManager::HandleDiePackage(TERRAIN_DIE package)
 	auto terrain = listTerrain.at(package.idTerrain);
 	terrain->Die();
 	//terrain->rectNode->setVisible(false);
+
+	if (terrain->GetType() == TerrainType::COMMANDBASE)
+	{
+		Scene *endScene = EndScene::createScene(terrain->GetTeam());
+		Director::getInstance()->replaceScene(endScene);
+	}
 }
 
 Vector<TerrainObject*> TerrainManager::GetTerrains()
