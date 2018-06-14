@@ -38,10 +38,10 @@
 #define MAP_TILED_SIZE 32.0f
 #define MAP_TERRAIN_RED 1
 #define MAP_TERRAIN_SLIVER 3
-#define MAP_TANK_TEAM_1 5
-#define MAP_TANK_TEAM_2 4
-#define MAP_BIRTH_TEAM_1 6
-#define MAP_BIRTH_TEAM_2 2
+#define MAP_TANK_TEAM_BLUE 5
+#define MAP_TANK_TEAM_GREEN 4
+#define MAP_BIRTH_TEAM_BLUE 6
+#define MAP_BIRTH_TEAM_GREEN 2
 
 
 #pragma endregion GameInfo

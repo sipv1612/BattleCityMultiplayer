@@ -232,10 +232,6 @@ void GameManager::InitMap()
 	int ** matrixMap = LoadMap();
 	if (matrixMap != nullptr)
 	{
-		//spawn 2 commandbase
-		TerrainManager::GetInstance()->SpawnCommandBase(Team::TeamGreen, 12 * MAP_TILED_SIZE, 21 * MAP_TILED_SIZE);
-		TerrainManager::GetInstance()->SpawnCommandBase(Team::TeamBlue, 12 * MAP_TILED_SIZE, 1 * MAP_TILED_SIZE);
-
 		for (int i = 0; i < MAP_HEIGHT; i++)
 			for (int j = 0; j < MAP_WIDTH; j++)
 			{
@@ -248,24 +244,22 @@ void GameManager::InitMap()
 					TerrainManager::GetInstance()->Spawn(TerrainType::BRICK, j * MAP_TILED_SIZE,  i * MAP_TILED_SIZE);
 
 				}
-				if (matrixMap[i][j] == MAP_TANK_TEAM_1)
+				if (matrixMap[i][j] == MAP_TANK_TEAM_BLUE)
 				{
 					TankMgr::GetInstance()->Spawn(Team::TeamBlue, j * MAP_TILED_SIZE, i * MAP_TILED_SIZE);
 				}
-				if (matrixMap[i][j] == MAP_TANK_TEAM_2)
+				if (matrixMap[i][j] == MAP_TANK_TEAM_GREEN)
 				{
 					TankMgr::GetInstance()->Spawn(Team::TeamGreen, j * MAP_TILED_SIZE, i * MAP_TILED_SIZE);
 				}
-				/*if (matrixMap[i][j] == MAP_BIRTH_TEAM_1)
+				if (matrixMap[i][j] == MAP_BIRTH_TEAM_BLUE)
 				{
-				birth[0] = new Birth();
-				birth[0]->Init(TEAM_1, j * 32, i * 32);
+					TerrainManager::GetInstance()->SpawnCommandBase(Team::TeamBlue, j * MAP_TILED_SIZE, i * MAP_TILED_SIZE);
 				}
-				if (matrixMap[i][j] == MAP_BIRTH_TEAM_2)
+				if (matrixMap[i][j] == MAP_BIRTH_TEAM_GREEN)
 				{
-				birth[1] = new Birth();
-				birth[1]->Init(TEAM_2, j * 32, i * 32);
-				}*/
+					TerrainManager::GetInstance()->SpawnCommandBase(Team::TeamGreen, j * MAP_TILED_SIZE, i * MAP_TILED_SIZE);
+				}
 			}
 	}
 	else

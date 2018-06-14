@@ -147,7 +147,7 @@ void GameMgr::BulletVsTerrain(float deltaTime)
 							if (listTerrain.at(i)->GetType() == TerrianType::COMMANDBASE)
 							{
 								teamLost = listTerrain.at(i)->GetTeam();
-								printf("TeamLost %d (%d, %d)", teamLost, listTerrain.at(i)->GetBox()->x, listTerrain.at(i)->GetBox()->y);
+ 								printf("TeamLost %d (%d, %d)", teamLost, listTerrain.at(i)->GetBox()->x, listTerrain.at(i)->GetBox()->y);
 							}
 
 						}
@@ -213,10 +213,6 @@ void GameMgr::InitMap()
 	int ** matrixMap = LoadMap();
 	if (matrixMap != nullptr)
 	{
-		//spawn 2 commandbase
-		TerrainMgr::GetInstance()->SpawnCommandBase(Team::TEAM_GREEN, 12 * MAP_TILED_SIZE, 21 * MAP_TILED_SIZE);
-		TerrainMgr::GetInstance()->SpawnCommandBase(Team::TEAM_BLUE, 12 * MAP_TILED_SIZE, 1 * MAP_TILED_SIZE);
-
 		for (int i = 0; i < MAP_HEIGHT; i++)
 			for (int j = 0; j < MAP_WIDTH; j++)
 			{
@@ -229,24 +225,22 @@ void GameMgr::InitMap()
 					TerrainMgr::GetInstance()->Spawn(TerrianType::REB, j * MAP_TILED_SIZE, i * MAP_TILED_SIZE);
 					
 				}
-				if (matrixMap[i][j] == MAP_TANK_TEAM_1)
-				{
-					TankMgr::GetInstance()->SpawnRobot(TEAM_GREEN, j * MAP_TILED_SIZE, i * MAP_TILED_SIZE);
-				}
-				if (matrixMap[i][j] == MAP_TANK_TEAM_2)
+				if (matrixMap[i][j] == MAP_TANK_TEAM_BLUE)
 				{
 					TankMgr::GetInstance()->SpawnRobot(TEAM_BLUE, j * MAP_TILED_SIZE, i * MAP_TILED_SIZE);
 				}
-				/*if (matrixMap[i][j] == MAP_BIRTH_TEAM_1)
+				if (matrixMap[i][j] == MAP_TANK_TEAM_GREEN)
 				{
-					birth[0] = new Birth();
-					birth[0]->Init(TEAM_1, j * 32, i * 32);
+					TankMgr::GetInstance()->SpawnRobot(TEAM_GREEN, j * MAP_TILED_SIZE, i * MAP_TILED_SIZE);
 				}
-				if (matrixMap[i][j] == MAP_BIRTH_TEAM_2)
+				if (matrixMap[i][j] == MAP_BIRTH_TEAM_BLUE)
 				{
-					birth[1] = new Birth();
-					birth[1]->Init(TEAM_2, j * 32, i * 32);
-				}*/
+					TerrainMgr::GetInstance()->SpawnCommandBase(Team::TEAM_BLUE, j * MAP_TILED_SIZE, i * MAP_TILED_SIZE);
+				}
+				if (matrixMap[i][j] == MAP_BIRTH_TEAM_GREEN)
+				{
+					TerrainMgr::GetInstance()->SpawnCommandBase(Team::TEAM_GREEN, j * MAP_TILED_SIZE, i * MAP_TILED_SIZE);
+				}
 			}
 	}
 	else
