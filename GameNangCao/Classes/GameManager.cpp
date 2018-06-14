@@ -2,6 +2,7 @@
 #include "GameManager.h"
 #include "Define.h"
 #include "Collision.h"
+#include "GlobalVariable.h"
 
 extern int YourPos;
 
@@ -121,7 +122,7 @@ void GameManager::BulletVsTerrain(float deltaTime)
 
 		for (int j = 0; j < listBullet.size(); j++)
 		{
-			if (listBullet.at(j)->GetTeam() != listTerrain.at(i)->GetTeam() && !listBullet.at(j)->IsDie() && !listTerrain.at(i)->IsDie())
+			if (!listBullet.at(j)->IsDie() && !listTerrain.at(i)->IsDie())
 			{
 				CollisionClass::GetSweptBroadphaseBox(listBullet.at(j)->GetBox(), deltaTime, &broadPhaseBoxA);
 				CollisionClass::GetSweptBroadphaseBox(listTerrain.at(i)->GetBox(), deltaTime, &broadPhaseBoxB);
@@ -216,6 +217,14 @@ GameManager * GameManager::GetInstance()
 	return instance;
 }
 
+void GameManager::HandlePing(int iD)
+{
+	if (iD == YourPos)
+	{
+		float ping = GameTime - timeBeforeCheckPing;
+	}
+}
+
 void GameManager::InitMap()
 {
 	
@@ -224,8 +233,8 @@ void GameManager::InitMap()
 	if (matrixMap != nullptr)
 	{
 		//spawn 2 commandbase
-		TerrainManager::GetInstance()->SpawnCommandBase(Team::TeamBlue, 12 * MAP_TILED_SIZE, 21 * MAP_TILED_SIZE);
-		TerrainManager::GetInstance()->SpawnCommandBase(Team::TeamGreen, 12 * MAP_TILED_SIZE, 1 * MAP_TILED_SIZE);
+		TerrainManager::GetInstance()->SpawnCommandBase(Team::TeamGreen, 12 * MAP_TILED_SIZE, 21 * MAP_TILED_SIZE);
+		TerrainManager::GetInstance()->SpawnCommandBase(Team::TeamBlue, 12 * MAP_TILED_SIZE, 1 * MAP_TILED_SIZE);
 
 		for (int i = 0; i < MAP_HEIGHT; i++)
 			for (int j = 0; j < MAP_WIDTH; j++)
@@ -264,7 +273,25 @@ void GameManager::InitMap()
 		printf("Load Map failed!!\n");
 	}
 }
-
+void GameManager::UpdateCheckPingTime(float deltaTime)
+{
+	timeCheckPing += deltaTime;
+	if (timeCheckPing > CHECK_PING_RATE)
+	{
+		SendDataCheckPing();
+		timeCheckPing = GameTime;
+		timeCheckPing = 0;
+	}
+}
+void GameManager::SendDataCheckPing()
+{
+	SEND_KEY key = SEND_KEY(KeySend::Ping);
+	memcpy(dataSendBuffer + LPDataSendBuffer, &key, sizeof SEND_KEY);
+	LPDataSendBuffer += sizeof SEND_KEY;
+	GET_PING data = GET_PING(YourPos, GameTime);
+	memcpy(dataSendBuffer + LPDataSendBuffer, &data, sizeof GET_PING);
+	LPDataSendBuffer += sizeof GET_PING;
+}
 int** GameManager::LoadMap()
 {
 	int **matrix = 0;
@@ -297,6 +324,7 @@ void GameManager::Update(float deltaTime)
 	TankMgr::GetInstance()->Update(deltaTime);
 	BulletManager::GetInstance()->Update(deltaTime);
 	GameTime += deltaTime;
+	UpdateCheckPingTime(deltaTime);
 }
 
 

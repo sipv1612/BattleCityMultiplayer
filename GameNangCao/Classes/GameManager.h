@@ -18,10 +18,16 @@ private:
 	
 	void InitMap();
 	int** LoadMap();
+
+	float timeCheckPing = 0;
+	float timeBeforeCheckPing = 0;
 public:
 	static GameManager* create();
 	bool init();
+	void UpdateCheckPingTime(float deltaTime);
+	void SendDataCheckPing();
 	static GameManager * GetInstance();
+	void HandlePing(int iD);
 	void Update(float deltaTime);
 	
 };

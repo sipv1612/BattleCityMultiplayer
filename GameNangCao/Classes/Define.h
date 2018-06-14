@@ -26,6 +26,7 @@ USING_NS_CC;
 #define MAP_BIRTH_TEAM_1 6
 #define MAP_BIRTH_TEAM_2 2
 
+#define CHECK_PING_RATE 0.5
 #define DEFAULT_COUNT       2
 #define DEFAULT_PORT        5150
 #define DEFAULT_BUFFER      5000
@@ -76,7 +77,8 @@ enum KEY
 	TankRevial,
 	BulletSpawn,
 	BulletDie,
-	TerrainDie
+	TerrainDie,
+	GetPing
 	
 };
 
@@ -178,16 +180,17 @@ struct TERRAIN_DIE
 	}
 };
 
-struct PING
+struct GET_PING
 {
-	int characterID;
+	int iD;
 	float gameTime;
-	PING() {}
-	PING(int _characterID, float _gameTime)
+	GET_PING() {}
+	GET_PING(int _id, float _gameTime) 
 	{
-		characterID = _characterID;
+		iD = _id;
 		gameTime = _gameTime;
 	}
+
 };
 
 enum KeySend
@@ -245,7 +248,8 @@ static const float MAX_HEALTH_BRICK = 3;
 
 static const char* SPRITE_BRICK = "Brick.png";
 static const char* SPRITE_CONCRETE = "Concrete.png";
-static const char* SPRITE_COMMAND_BASE = "CommandBase.png";
+static const char* SPRITE_COMMAND_BASE_BLUE = "CommandBaseBlue.png";
+static const char* SPRITE_COMMAND_BASE_GREEN = "CommandBaseGreen.png";
 static const char* SPRITE_BULLET = "EnemyBullet.png";
 static const char* SPRITE_TANK_RED = "RedTank.png";
 static const char* SPRITE_TANK_BLUE = "BlueTeam.png";

@@ -42,9 +42,23 @@ void TerrainObject::SpawnTerrain(TerrainType _type, float _x, float _y, Team _te
 		this->type = TerrainType::CONCRETE;
 		break;
 	case COMMANDBASE:
-		this->setObjectSprite(SPRITE_COMMAND_BASE);
-		this->type = TerrainType::COMMANDBASE;
 		this->team = _team;
+		switch (_team)
+		{
+		case TeamGreen:
+			this->setObjectSprite(SPRITE_COMMAND_BASE_GREEN);
+			CCLOG("Spawn green");
+			break;
+		case TeamBlue:
+			this->setObjectSprite(SPRITE_COMMAND_BASE_BLUE);
+			CCLOG("Spawn blue");
+			break;
+		case None:
+			break;
+		default:
+			break;
+		}
+		this->type = TerrainType::COMMANDBASE;
 		break;
 	default:
 		break;

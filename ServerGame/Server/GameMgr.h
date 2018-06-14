@@ -8,7 +8,7 @@ private:
 
 	static GameMgr * instance;
 
-	Team teamWon;
+	Team teamLost;
 
 	GameMgr();
 	void CheckCollsion(float deltaTime);

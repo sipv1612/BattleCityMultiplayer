@@ -47,7 +47,7 @@ void TankMgr::Packing()
 	{
 		*(lpHead) = 0;
 	}
-	if (*(lpHead) < *(lpTail))
+	while (*(lpHead) < *(lpTail))
 	{
 		int dataSize = 0;
 		memcpy(&dataSize, data + *(lpHead), sizeof(int));
@@ -60,7 +60,7 @@ void TankMgr::Packing()
 			*(lpHead) += sizeof RECV_KEY;
 			RECV_MOVE_DATA move;
 			RECV_SHOOT_DATA shot;
-
+			GET_PING ping;
 			switch (key.key)
 			{
 			case KeySend::Move:
@@ -71,8 +71,12 @@ void TankMgr::Packing()
 			case KeySend::Shoot:
 				memcpy(&shot, data + *(lpHead), sizeof RECV_SHOOT_DATA);
 				*(lpHead) += sizeof RECV_SHOOT_DATA;
-				listTank[shot.iD]->Shoot(shot.dirShot);
+				listTank[shot.iD]->Shoot(true);
 				break;
+			case KeySend::Ping:
+				memcpy(&ping, data + *(lpHead), sizeof GET_PING);
+				*(lpHead) += sizeof GET_PING;
+				listTank[ping.iD]->SendDataPing();
 			default:
 				break;
 			}
@@ -86,11 +90,12 @@ void TankMgr::SpawnPlayer()
 	for (int i = 0; i < 4; i++)
 	{
 		auto player1 = new Tank();
-		Team team = i < 2 ? TEAM_GREEN : TEAM_BLUE;
+		Team team = i < 2 ? TEAM_BLUE : TEAM_GREEN;
 		player1->Spawn(team, listPosPlayer[i].x, listPosPlayer[i].y);
 		player1->SetID(listTank.size());
 		listTank.push_back(player1);
 	}
+	
 }
 
 void TankMgr::SpawnRobot(Team team, float x, float y)
@@ -110,4 +115,9 @@ std::vector<Tank*> TankMgr::GetTanks()
 
 TankMgr::~TankMgr()
 {
+	while (!listTank.empty())
+	{
+		delete listTank.front();
+		listTank.erase(listTank.begin());
+	}
 }

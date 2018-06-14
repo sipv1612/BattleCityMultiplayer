@@ -60,11 +60,22 @@ void TerrainManager::HandleDiePackage(TERRAIN_DIE package)
 {
 	auto terrain = listTerrain.at(package.idTerrain);
 	terrain->Die();
-	//terrain->rectNode->setVisible(false);
 
 	if (terrain->GetType() == TerrainType::COMMANDBASE)
 	{
-		Scene *endScene = EndScene::createScene(terrain->GetTeam());
+		Scene *endScene;
+		switch (terrain->GetTeam())
+		{
+		case TeamBlue:
+			endScene = EndScene::createScene(TeamGreen);
+			break;
+		case TeamGreen:
+			endScene = EndScene::createScene(TeamBlue);
+			break;
+		default:
+			break;
+		}
+		
 		Director::getInstance()->replaceScene(endScene);
 	}
 }

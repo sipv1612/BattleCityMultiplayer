@@ -9,6 +9,7 @@ Bullet::Bullet()
 
 Bullet::~Bullet()
 {
+	delete box;
 }
 
 void Bullet::Die()
@@ -31,6 +32,16 @@ void Bullet::SendDataDie()
 	LPDataSendBuffer += sizeof BULLET_DIE;
 	//printf("Bullet Die \n");
 
+}
+
+void Bullet::SendDataSpawn()
+{
+	PACKET_KEY key = PACKET_KEY(BulletSpawn);
+	memcpy(dataSendBuffer + LPDataSendBuffer, &key, sizeof PACKET_KEY);
+	LPDataSendBuffer += sizeof PACKET_KEY;
+	BULLET_SPAWN data = BULLET_SPAWN(iD, box->x, box->y, moveDir, team, gameTime);
+	memcpy(dataSendBuffer + LPDataSendBuffer, &data, sizeof BULLET_SPAWN);
+	LPDataSendBuffer += sizeof BULLET_SPAWN;
 }
 
 void Bullet::Update(float deltaTime)
@@ -65,6 +76,7 @@ void Bullet::Spawn(Team _team, float x, float y, eMove dir)
 	SetSpeed(BULLET_SPEED);
 	SetPos(x, y);
 	Move(dir);
+	SendDataSpawn();
 	switch (dir)
 	{
 	case UP:
@@ -80,6 +92,7 @@ void Bullet::Spawn(Team _team, float x, float y, eMove dir)
 		break;
 	}
 }
+
 
 bool Bullet::IsOutOfScreen()
 {

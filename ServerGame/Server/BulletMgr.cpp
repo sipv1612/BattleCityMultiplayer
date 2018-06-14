@@ -25,6 +25,11 @@ Bullet* BulletMgr::GetIndexBullet()
 
 BulletMgr::~BulletMgr()
 {
+	while (!listBullet.empty())
+	{
+		delete listBullet.front();
+		listBullet.erase(listBullet.begin());
+	}
 }
 
 BulletMgr * BulletMgr::GetInstance()

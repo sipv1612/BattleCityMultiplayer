@@ -7,18 +7,23 @@ Scene* EndScene::createScene(Team Winner)
 	// 'scene' is an autorelease object
 	auto scene = Scene::create();
 	// 'layer' is an autorelease object
-    auto layer = EndScene::create();
-	layer->teamWin = Winner;
-	
-    // add layer as a child to scene
-    scene->addChild(layer);
-
-    // return the scene
-    return scene;
+	EndScene *pRet = new(std::nothrow) EndScene();
+	if (pRet && pRet->init(Winner))
+	{
+		pRet->autorelease();
+		scene->addChild(pRet);
+		return scene;
+	}
+	else
+	{
+		delete pRet;
+		pRet = nullptr;
+		return nullptr;
+	}
 }
 
 // on "init" you need to initialize your instance
-bool EndScene::init()
+bool EndScene::init(Team _teamWin)
 {
     //////////////////////////////
     // 1. super init first
@@ -29,7 +34,8 @@ bool EndScene::init()
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 	cocos2d::Sprite *backGround;
-	switch (teamWin)
+	teamWin = _teamWin;
+	switch (_teamWin)
 	{
 	case TeamGreen:
 		backGround = cocos2d::Sprite::create("Green.png");

@@ -6,15 +6,15 @@
 
 class EndScene : public cocos2d::Layer
 {
-public:
+private:
 	Team teamWin;
+public:
     static cocos2d::Scene* createScene(Team Winer);
 
-    virtual bool init();
+    virtual bool init(Team _teamWin);
     // a selector callback
 	void menuCloseCallback(cocos2d::Ref* pSender);
     // implement the "static create()" method manually
-    CREATE_FUNC(EndScene);
 };
 
 #endif // __HELLOWORLD_SCENE_H__

@@ -7,7 +7,7 @@
 GameMgr* GameMgr::instance = 0;
 GameMgr::GameMgr()
 {
-	teamWon = Team::TEAM_NONE;
+	teamLost = Team::TEAM_NONE;
 	InitMap();
 }
 
@@ -15,9 +15,9 @@ void GameMgr::CheckCollsion(float deltaTime)
 {
 	TankVsBullet(deltaTime);
 	TankVsTank(deltaTime);
-	TankVsTerrain(deltaTime);
 	BulletVsBullet(deltaTime);
 	BulletVsTerrain(deltaTime);
+	TankVsTerrain(deltaTime);
 }
 
 void GameMgr::TankVsTerrain(float deltaTime)
@@ -126,7 +126,7 @@ void GameMgr::BulletVsTerrain(float deltaTime)
 
 		for (int j = 0; j < listBullet.size(); j++)
 		{
-			if (listBullet.at(j)->GetTeam() != listTerrain.at(i)->GetTeam() && !listBullet.at(j)->IsDie() && !listTerrain.at(i)->IsDie())
+			if (!listBullet.at(j)->IsDie() && !listTerrain.at(i)->IsDie())
 			{
 				CollisionClass::GetSweptBroadphaseBox(listBullet.at(j)->GetBox(), deltaTime, &broadPhaseBoxA);
 				CollisionClass::GetSweptBroadphaseBox(listTerrain.at(i)->GetBox(), deltaTime, &broadPhaseBoxB);
@@ -139,10 +139,18 @@ void GameMgr::BulletVsTerrain(float deltaTime)
 					{
 						listBullet.at(j)->AABBHandle(deltaTime, collisiontime);
 						listBullet.at(j)->Die();
-						if (listTerrain.at(i)->GetType() == TerrianType::REB || listTerrain.at(i)->GetType() == TerrianType::COMMANDBASE)
+						if (listTerrain.at(i)->GetType() == TerrianType::REB
+							|| (listTerrain.at(i)->GetType() == TerrianType::COMMANDBASE
+								&& listTerrain.at(i)->GetTeam() != listBullet.at(j)->GetTeam()))
+						{
 							listTerrain.at(i)->Die();
-						if (listTerrain.at(i)->GetType() == TerrianType::COMMANDBASE)
-							teamWon = listTerrain.at(i)->GetTeam();
+							if (listTerrain.at(i)->GetType() == TerrianType::COMMANDBASE)
+							{
+								teamLost = listTerrain.at(i)->GetTeam();
+								printf("TeamLost %d (%d, %d)", teamLost, listTerrain.at(i)->GetBox()->x, listTerrain.at(i)->GetBox()->y);
+							}
+
+						}
 					}
 				}
 			}
@@ -206,8 +214,8 @@ void GameMgr::InitMap()
 	if (matrixMap != nullptr)
 	{
 		//spawn 2 commandbase
-		TerrainMgr::GetInstance()->SpawnCommandBase(Team::TEAM_BLUE, 12 * MAP_TILED_SIZE, 21 * MAP_TILED_SIZE);
-		TerrainMgr::GetInstance()->SpawnCommandBase(Team::TEAM_GREEN, 12 * MAP_TILED_SIZE, 1 * MAP_TILED_SIZE);
+		TerrainMgr::GetInstance()->SpawnCommandBase(Team::TEAM_GREEN, 12 * MAP_TILED_SIZE, 21 * MAP_TILED_SIZE);
+		TerrainMgr::GetInstance()->SpawnCommandBase(Team::TEAM_BLUE, 12 * MAP_TILED_SIZE, 1 * MAP_TILED_SIZE);
 
 		for (int i = 0; i < MAP_HEIGHT; i++)
 			for (int j = 0; j < MAP_WIDTH; j++)
@@ -245,6 +253,11 @@ void GameMgr::InitMap()
 	{
 		printf("Load Map failed!!\n");
 	}
+	for (int i = 0; i < MAP_HEIGHT; i++)
+	{
+		delete[] matrixMap[i];
+	}
+	delete[] matrixMap;
 }
 
 int** GameMgr::LoadMap()
@@ -275,7 +288,7 @@ int** GameMgr::LoadMap()
 
 void GameMgr::Update(float deltaTime)
 {
-	if (teamWon != Team::TEAM_NONE)
+	if (teamLost != Team::TEAM_NONE)
 		return;
 	TankMgr::GetInstance()->Packing();
 	TankMgr::GetInstance()->UpdateAIRobot(deltaTime);

@@ -10,6 +10,7 @@ Terrain::Terrain()
 
 Terrain::~Terrain()
 {
+	delete box;
 }
 
 void Terrain::Die()
@@ -41,6 +42,8 @@ void Terrain::SpawnTerrain(TerrianType _type, float x, float y, Team _team)
 
 	SetPos(x, y);
 }
+
+
 
 
 TerrianType Terrain::GetType()

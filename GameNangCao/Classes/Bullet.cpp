@@ -37,7 +37,8 @@ void Bullet::Spawn(int _ownerID, Team _team, float _x, float _y, float _serverGa
 	OwnerID = _ownerID;
 	isDie = false;
 	SetSpeed(SPEED_BULLET);
-	MoveRealtime(_x, _y, _serverGameTime, _dir);
+	this->SetPos(_x, _y);
+	this->Move(_dir);
 	switch (_dir)
 	{
 	case UP:

@@ -14,7 +14,6 @@ private:
 	void Revival();
 	void SendDataRivival();
 	void SendDataMove();
-	void SendDataShoot();
 	void SendDataDie();
 	void UpdateShoot(float deltaTime);
 	void UpdateMove(float deltaTime);
@@ -31,11 +30,12 @@ public:
 	void Die();
 	void Reset();
 	void SetRobot();
+	void SendDataPing();
+
 	void Shoot(bool isPlayer = false);
 	void Move(eMove dir = NONE);
 	void Update(float deltaTime);
 	void AIRobot(float deltaTime);
-
 	void Spawn(Team team, float x, float y, eMove dir = NONE);
 };
 

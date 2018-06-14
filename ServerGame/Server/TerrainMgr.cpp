@@ -10,6 +10,11 @@ TerrainMgr::TerrainMgr()
 
 TerrainMgr::~TerrainMgr()
 {
+	while (!listTerrain.empty())
+	{
+		delete listTerrain.front();
+		listTerrain.erase(listTerrain.begin());
+	}
 }
 
 TerrainMgr * TerrainMgr::GetInstance()
